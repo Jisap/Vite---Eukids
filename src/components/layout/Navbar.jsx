@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Logo from './Logo'
 import gsap from 'gsap';
+import Menu from './Menu';
 
 
 
@@ -11,11 +12,11 @@ const Navbar = () => {
 
   // Entrance animation, once on mount
   useEffect(() => {
-    gsap.from(".navbar-shell", {
-      y: -40,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out"
+    gsap.from(".navbar-shell", { // navbar-shell es la clase que le dimos a la nav
+      y: -40,                    //  el -40 significa que empieza 40px arriba del final
+      opacity: 0,                //   y que empieza invisible
+      duration: 0.8,             //  y que dura 0.8 segundos
+      ease: "power3.out"         //  y que tiene una aceleracion suave
     });
   }, []);
 
@@ -46,7 +47,11 @@ const Navbar = () => {
             <Logo className="w-32 lg:40 shrink-0" />
 
             <div className='hidden lg:block'>
+              <Menu />
+            </div>
 
+            <div className='hidden lg:block shrink-0'>
+              {/* Create Button Component */}
             </div>
           </nav>
         </div>
