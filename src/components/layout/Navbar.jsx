@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from './Logo'
 import gsap from 'gsap';
+
+
 
 const Navbar = () => {
 
@@ -37,15 +39,16 @@ const Navbar = () => {
           <nav className={`
             navbar-shell flex items-center justify-between h-22 lg:h-24 border-card px-5 lg:px-8 rounded-full bg-white transition-shadow duration-300 mt-5 opacity-100!
             ${scrolled ? 'shadow-lg' : ''}
-            `}>
+            `}
+          >
 
+
+            <Logo className="w-32 lg:40 shrink-0" />
+
+            <div className='hidden lg:block'>
+
+            </div>
           </nav>
-
-          <Logo className="w-32 lg:40 shrink-0" />
-
-          <div className='hidden lg:block'>
-
-          </div>
         </div>
       </header>
     </>
