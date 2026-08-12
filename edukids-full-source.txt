@@ -1,0 +1,4775 @@
+================================================================
+EDUKIDS - FULL PROJECT SOURCE
+================================================================
+
+SETUP / INSTALLATION
+----------------------------------------------------------------
+1. Install Node.js (v18+ recommended) if not already installed.
+2. From the project root, install all dependencies:
+
+   npm install
+
+3. Start the dev server:
+
+   npm run dev
+
+4. Other available scripts (see package.json):
+   npm run build     - production build
+   npm run preview   - preview the production build
+   npm run lint      - run ESLint
+
+MAIN MODULES INSTALLED (dependencies)
+----------------------------------------------------------------
+  @iconify/react: ^6.0.2
+  @splidejs/react-splide: ^0.7.12
+  @tailwindcss/vite: ^4.3.1
+  aos: ^2.3.4
+  gsap: ^3.13.0
+  react: ^19.2.6
+  react-dom: ^19.2.6
+  react-router-dom: ^7.17.0
+  tailwindcss: ^4.3.1
+
+DEV MODULES INSTALLED (devDependencies)
+----------------------------------------------------------------
+  @eslint/js: ^10.0.1
+  @types/react: ^19.2.14
+  @types/react-dom: ^19.2.3
+  @vitejs/plugin-react: ^6.0.1
+  eslint: ^10.3.0
+  eslint-plugin-react-hooks: ^7.1.1
+  eslint-plugin-react-refresh: ^0.5.2
+  globals: ^17.6.0
+  vite: ^8.0.12
+
+If you want a single combined install command:
+
+   npm install @iconify/react @splidejs/react-splide @tailwindcss/vite aos gsap react react-dom react-router-dom tailwindcss
+   npm install -D @eslint/js @types/react @types/react-dom @vitejs/plugin-react eslint eslint-plugin-react-hooks eslint-plugin-react-refresh globals vite
+
+================================================================
+
+DIRECTORY STRUCTURE (excluding node_modules, .git, binary assets)
+----------------------------------------------------------------
+.vscode/settings.json
+README.md
+eslint.config.js
+index.html
+package-lock.json
+package.json
+src/App.jsx
+src/animations/heroAnimations.js
+src/components/cards/BlogCard.jsx
+src/components/cards/CourseCard.jsx
+src/components/cards/EventCard.jsx
+src/components/cards/PricingCard.jsx
+src/components/cards/ProgramCard.jsx
+src/components/cards/TeacherCard.jsx
+src/components/common/Accordion.jsx
+src/components/common/DetailRow.jsx
+src/components/common/FormField.jsx
+src/components/common/InfoBox.jsx
+src/components/common/ScrollToTop.jsx
+src/components/common/SkillBar.jsx
+src/components/layout/Footer.jsx
+src/components/layout/Logo.jsx
+src/components/layout/Menu.jsx
+src/components/layout/Navbar.jsx
+src/components/ui/Breadcrumb.jsx
+src/components/ui/Button.jsx
+src/components/ui/Input.jsx
+src/components/ui/SectionHeading.jsx
+src/components/ui/SliderArrows.jsx
+src/data/blogs.js
+src/data/contact.js
+src/data/courses.js
+src/data/events.js
+src/data/navLinks.js
+src/data/pricing.js
+src/data/teachers.js
+src/data/testimonials.js
+src/hooks/useAOS.js
+src/hooks/useGSAP.js
+src/hooks/useIsMobile.js
+src/index.css
+src/main.jsx
+src/pages/about/About.jsx
+src/pages/blog/Blog.jsx
+src/pages/blog/BlogDetails.jsx
+src/pages/contact/Contact.jsx
+src/pages/courses/Course.jsx
+src/pages/courses/CourseDetails.jsx
+src/pages/event/Event.jsx
+src/pages/event/EventDetails.jsx
+src/pages/home/Home.jsx
+src/pages/home/sections/About.jsx
+src/pages/home/sections/Blog.jsx
+src/pages/home/sections/Category.jsx
+src/pages/home/sections/Classes.jsx
+src/pages/home/sections/Courses.jsx
+src/pages/home/sections/Event.jsx
+src/pages/home/sections/Gallery.jsx
+src/pages/home/sections/Hero.jsx
+src/pages/home/sections/PopularClasses.jsx
+src/pages/home/sections/Team.jsx
+src/pages/home/sections/Testimonials.jsx
+src/pages/pricing/Pricing.jsx
+src/pages/team/Team.jsx
+src/pages/team/TeamDetails.jsx
+src/utils/helpers.js
+vite.config.js
+
+Note: src/assets/* (images, svgs, etc.) and package-lock.json are
+excluded below as they are binary/generated, not source code.
+================================================================
+
+
+================================================================
+FILE: .vscode/settings.json
+================================================================
+{
+    "liveServer.settings.port": 5501
+}
+
+================================================================
+FILE: README.md
+================================================================
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+================================================================
+FILE: eslint.config.js
+================================================================
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+])
+
+
+================================================================
+FILE: index.html
+================================================================
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="EduKids — Where every child discovers the magic of learning through play, creativity, and exploration." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+    <title>EduKids — Where Learning Meets Play</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+================================================================
+FILE: package.json
+================================================================
+{
+  "name": "edukids",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "@splidejs/react-splide": "^0.7.12",
+    "@tailwindcss/vite": "^4.3.1",
+    "aos": "^2.3.4",
+    "gsap": "^3.13.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.17.0",
+    "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "vite": "^8.0.12"
+  }
+}
+
+
+================================================================
+FILE: src/App.jsx
+================================================================
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "@components/layout/Navbar";
+import Footer from "@components/layout/Footer";
+import ScrollToTop from "@components/common/ScrollToTop";
+import { useAOS } from "@hooks/useAOS";
+
+import Home from "@pages/home/Home";
+import About from "@pages/about/About";
+import Team from "@pages/team/Team";
+import TeamDetails from "@pages/team/TeamDetails";
+import Event from "@pages/event/Event";
+import EventDetails from "@pages/event/EventDetails";
+import Course from "@pages/courses/Course";
+import CourseDetails from "@pages/courses/CourseDetails";
+import Blog from "@pages/blog/Blog";
+import BlogDetails from "@pages/blog/BlogDetails";
+import Pricing from "@pages/pricing/Pricing";
+import Contact from "@pages/contact/Contact";
+
+const App = () => {
+  // Single AOS init for the whole app — never call AOS.init() elsewhere.
+  useAOS();
+
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Navbar />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/team/:id" element={<TeamDetails />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/event/:id" element={<EventDetails />} />
+          <Route path="/courses" element={<Course />} />
+          <Route path="/courses/:id" element={<CourseDetails />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogDetails />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+
+      <Footer />
+    </BrowserRouter>
+  );
+};
+
+export default App;
+
+
+================================================================
+FILE: src/animations/heroAnimations.js
+================================================================
+import gsap from "gsap";
+
+/**
+ * Hero entrance: staggers the headline, copy, and CTA upward into place,
+ * then lets the floating decorative SVGs drift independently.
+ *
+ * @param {HTMLElement} container - the hero section root
+ */
+export const animateHeroEntrance = (container) => {
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+  tl.from(container.querySelector(".hero-eyebrow"), { opacity: 0, y: 20, duration: 0.6 })
+    .from(container.querySelector(".hero-heading"), { opacity: 0, y: 30, duration: 0.7 }, "-=0.35")
+    .from(container.querySelector(".hero-copy"), { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
+    .from(container.querySelector(".hero-actions"), { opacity: 0, y: 20, duration: 0.6 }, "-=0.35")
+    .from(
+      container.querySelector(".hero-image"),
+      { opacity: 0, x: 60, duration: 0.9, ease: "power2.out" },
+      "-=0.9"
+    );
+
+  return tl;
+};
+
+/**
+ * Subtle press-down micro-interaction for any clickable element.
+ * Call once per element on mount; GSAP handles its own cleanup via context.
+ *
+ * @param {HTMLElement} el
+ */
+export const attachButtonPress = (el) => {
+  const handleDown = () => gsap.to(el, { scale: 0.96, duration: 0.15, ease: "power2.out" });
+  const handleUp = () => gsap.to(el, { scale: 1, duration: 0.25, ease: "back.out(2)" });
+
+  el.addEventListener("pointerdown", handleDown);
+  el.addEventListener("pointerup", handleUp);
+  el.addEventListener("pointerleave", handleUp);
+
+  return () => {
+    el.removeEventListener("pointerdown", handleDown);
+    el.removeEventListener("pointerup", handleUp);
+    el.removeEventListener("pointerleave", handleUp);
+  };
+};
+
+/**
+ * Staggered reveal for a list of card elements — used as a GSAP alternative
+ * to AOS when a section needs finer timeline control (e.g. Hero stat cards).
+ *
+ * @param {HTMLElement[]|NodeList} cards
+ */
+export const staggerCardsIn = (cards) =>
+  gsap.from(cards, {
+    opacity: 0,
+    y: 40,
+    duration: 0.6,
+    stagger: 0.12,
+    ease: "power3.out",
+  });
+
+
+================================================================
+FILE: src/components/cards/BlogCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+
+/**
+ * Blog post preview card. `view="list"` switches to a horizontal layout.
+ */
+const BlogCard = ({ blog, view }) => {
+  const isList = view === "list";
+
+  return (
+    <div
+      className={`bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-all duration-300 hover:-translate-y-2 ${
+        isList ? "flex flex-col lg:flex-row" : ""
+      }`}
+    >
+      <div className={isList ? "lg:w-96 shrink-0" : ""}>
+        <img
+          src={blog.image}
+          alt={blog.title}
+          className={`object-cover w-full ${isList ? "h-full" : "h-64"}`}
+        />
+      </div>
+
+      <div className="p-6 flex-1">
+        <div className="flex gap-3 mb-3">
+          <span className="bg-primary text-heading-1 px-3 py-1 rounded-full text-sm font-semibold">
+            {blog.type}
+          </span>
+          <span className="bg-gray-100 px-3 py-1 rounded-full text-sm">{blog.category}</span>
+        </div>
+
+        <Link to={`/blog/${blog.id}`}>
+          <h3 className="text-2xl font-bold mb-4 font-display hover:text-primary-2 transition-colors">
+            {blog.title}
+          </h3>
+        </Link>
+
+        <p className="text-gray-600 mb-5">{blog.description}</p>
+
+        <div className="flex items-center justify-between text-sm text-gray-600">
+          <div className="flex items-center gap-2">
+            <Icon icon="solar:user-linear" />
+            <span>{blog.author}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Icon icon="solar:calendar-linear" />
+            <span>{blog.date}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BlogCard;
+
+
+================================================================
+FILE: src/components/cards/CourseCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+
+/**
+ * Course tile shown in grids and carousels. Supports a "list" view
+ * (used on the /courses page toggle) in addition to the default grid card.
+ */
+const CourseCard = ({
+  id,
+  className = "",
+  courseImage,
+  authorImage,
+  title,
+  age,
+  duration,
+  rating,
+  reviews,
+  instructor,
+  price,
+  view,
+}) => {
+  const isList = view === "list";
+
+  return (
+    <div
+      className={`group overflow-hidden border-card shadow-lg transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl ${className} ${
+        isList ? "flex flex-col lg:flex-row" : "rounded-[30px]"
+      }`}
+    >
+      <div className={`overflow-hidden relative ${isList ? "lg:w-80 shrink-0" : ""}`}>
+        <img
+          src={courseImage}
+          alt={title}
+          className={`object-cover w-full transition-transform duration-700 group-hover:scale-110 ${
+            isList ? "h-64 lg:h-full" : "h-70"
+          }`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </div>
+
+      <div className="p-6 text-white flex-1">
+        <ul className="flex items-center gap-5 mb-4 text-sm">
+          <li className="flex items-center gap-2">
+            <Icon icon="solar:user-line-duotone" className="text-2xl" />
+            Ages {age}
+          </li>
+          <li className="flex items-center gap-2">
+            <Icon icon="mingcute:time-line" className="text-2xl" />
+            {duration}
+          </li>
+        </ul>
+
+        <Link to={`/courses/${id}`}>
+          <h5 className="text-2xl font-bold leading-snug mb-4 font-display transition-colors duration-300 group-hover:text-primary">
+            {title}
+          </h5>
+        </Link>
+
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Icon key={i} icon="mingcute:star-fill" className="text-primary text-xl" />
+            ))}
+          </div>
+          <span className="font-medium">
+            ({rating}) {reviews} Reviews
+          </span>
+        </div>
+
+        <div className="w-full h-px bg-white/20 mb-5" />
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src={authorImage} alt={instructor} className="w-12 h-12 rounded-full border-2 border-white object-cover" />
+            <div>
+              <p className="font-semibold">{instructor}</p>
+              <span className="text-sm text-white/70">Instructor</span>
+            </div>
+          </div>
+          <h5 className="text-3xl font-extrabold text-primary">{price}</h5>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CourseCard;
+
+
+================================================================
+FILE: src/components/cards/EventCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+
+/**
+ * Event tile with a circular date badge, title, time, and location.
+ */
+const EventCard = ({ id, day, month, title, time, location, bgColor, textColor, element, blink }) => (
+  <div
+    className={`relative ${bgColor} border-card rounded-2xl p-5 md:p-6 overflow-hidden transition-all duration-300 hover:-translate-y-1`}
+  >
+    <img src={blink} alt="" aria-hidden="true" className="absolute top-4 right-4 w-8 h-8 md:w-12 md:h-12" />
+
+    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 md:gap-6">
+      <div className="relative flex items-center justify-center text-center w-32 h-32 sm:w-36 sm:h-36 shrink-0">
+        <div className={`relative z-10 flex flex-col ${textColor}`}>
+          <span className="text-4xl md:text-5xl font-bold font-display">{day}</span>
+          <span className="text-lg md:text-xl">{month}</span>
+        </div>
+        <img src={element} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-contain" />
+      </div>
+
+      <div className={`flex-1 ${textColor} text-center sm:text-left`}>
+        <Link to={`/event/${id}`}>
+          <h3 className="text-xl md:text-2xl font-bold mb-4 font-display hover:underline">{title}</h3>
+        </Link>
+
+        <ul className="space-y-3">
+          <li className="flex items-center justify-center sm:justify-start gap-3">
+            <Icon icon="mdi:clock-outline" className="text-xl md:text-2xl shrink-0" />
+            <span>{time}</span>
+          </li>
+          <li className="flex items-start justify-center sm:justify-start gap-3">
+            <Icon icon="mdi:map-marker-outline" className="text-xl md:text-2xl mt-0.5 shrink-0" />
+            <span>{location}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+);
+
+export default EventCard;
+
+
+================================================================
+FILE: src/components/cards/PricingCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import Button from "../ui/Button";
+
+/**
+ * A single pricing tier card with a floating price badge.
+ *
+ * @param {string} planName
+ * @param {string} price
+ * @param {string} description
+ * @param {{label: string, included: boolean}[]} features
+ * @param {string} bgColor - tailwind bg-* class for the card body
+ * @param {string} [badgeBg] - tailwind bg-* class for the floating price badge (defaults to white)
+ */
+const PricingCard = ({ planName, price, description, features, bgColor, badgeBg = "bg-white" }) => (
+  <div className={`relative ${bgColor} text-white p-10 sm:p-12 pt-24 rounded-3xl`}>
+    <div className="absolute w-full -top-18 left-0 px-6">
+      <div className={`${badgeBg} border-card max-w-70 mx-auto p-5 text-heading-1 rounded-2xl`}>
+        <p className="text-2xl font-medium font-display">{planName}</p>
+        <p className="text-xl font-semibold">
+          <span className="text-2xl">{price}</span> / monthly
+        </p>
+      </div>
+    </div>
+
+    <p className="mb-8 text-lg opacity-90">{description}</p>
+
+    <ul className="space-y-5 mb-12">
+      {features.map((feature) => (
+        <li
+          key={feature.label}
+          className={`flex items-center gap-2 ${feature.included ? "" : "opacity-40"}`}
+        >
+          <Icon icon="ic:outline-check" width="22" className="text-primary shrink-0" />
+          <span>{feature.label}</span>
+        </li>
+      ))}
+    </ul>
+
+    <Button text="Get Started" variant="white" className="w-full" />
+  </div>
+);
+
+export default PricingCard;
+
+
+================================================================
+FILE: src/components/cards/ProgramCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import blink from "@assets/blink.svg";
+
+/**
+ * Age-group program tile (e.g. "Toddler, 1-3 Years").
+ * @param {string} title
+ * @param {string} age
+ * @param {string} description
+ * @param {string} icon - iconify icon name
+ * @param {string} bgColor - tailwind bg-* class
+ */
+const ProgramCard = ({ title, age, description, icon, bgColor }) => (
+  <div
+    className={`relative p-6 rounded-3xl ${bgColor} text-white overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-xl group`}
+  >
+    <img src={blink} alt="" aria-hidden="true" className="w-8 h-8 absolute top-5 right-5 animate-pulse" />
+
+    <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-white/20 mb-5 transition-transform duration-300 group-hover:scale-110">
+      <Icon icon={icon} className="text-4xl text-white" />
+    </div>
+
+    <h3 className="text-2xl font-bold mb-1 font-display">{title}</h3>
+    <span className="text-sm font-medium opacity-80">{age}</span>
+    <p className="mt-4 text-sm leading-7 opacity-90">{description}</p>
+  </div>
+);
+
+export default ProgramCard;
+
+
+================================================================
+FILE: src/components/cards/TeacherCard.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+
+const SOCIALS = [
+  { key: "facebook", icon: "mdi:facebook", color: "text-blue-600" },
+  { key: "instagram", icon: "mdi:instagram", color: "text-pink-600" },
+  { key: "linkedin", icon: "mdi:linkedin", color: "text-blue-700" },
+  { key: "youtube", icon: "mdi:youtube", color: "text-red-600" },
+];
+
+/**
+ * Teacher profile card with a hover-revealed social row.
+ * Links to /team/:id for the full bio page.
+ */
+const TeacherCard = ({ id, image, name, ...socials }) => (
+  <Link to={`/team/${id}`} className="group block">
+    <div className="relative w-full h-120 mb-5 border-card rounded-2xl overflow-hidden shadow-[6px_6px_0px_rgba(38,38,38,1)]">
+      <img
+        src={image}
+        alt={name}
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-0 translate-y-10 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+        {SOCIALS.filter((s) => socials[s.key]).map((s) => (
+          <a
+            key={s.key}
+            href={socials[s.key]}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="w-12 h-12 rounded-full bg-white flex items-center justify-center transition-all duration-300 hover:scale-125 hover:-translate-y-1"
+          >
+            <Icon icon={s.icon} className={`text-2xl ${s.color}`} />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div className="bg-white text-center border-card py-3 text-2xl font-medium rounded-xl font-display transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-primary">
+      {name}
+    </div>
+  </Link>
+);
+
+export default TeacherCard;
+
+
+================================================================
+FILE: src/components/common/Accordion.jsx
+================================================================
+import { useState } from "react";
+import { Icon } from "@iconify/react";
+
+/**
+ * Simple single-open accordion. Pass items as { title, content } where
+ * content can be any ReactNode (a string, a list, etc).
+ *
+ * @param {{title: string, content: React.ReactNode}[]} items
+ * @param {number} [defaultOpenIndex] - index open on mount, -1 for none
+ */
+const Accordion = ({ items, defaultOpenIndex = 0 }) => {
+  const [openIndex, setOpenIndex] = useState(defaultOpenIndex);
+
+  return (
+    <div className="space-y-4">
+      {items.map((item, index) => {
+        const isOpen = openIndex === index;
+        return (
+          <div key={item.title} className="border border-gray-200 rounded-2xl overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setOpenIndex(isOpen ? -1 : index)}
+              aria-expanded={isOpen}
+              className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left font-bold font-display text-lg cursor-pointer"
+            >
+              {item.title}
+              <Icon
+                icon="material-symbols:keyboard-arrow-down-rounded"
+                width={26}
+                className={`shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180 text-primary-2" : ""}`}
+              />
+            </button>
+
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                isOpen ? "max-h-150 opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="px-6 pb-5">{item.content}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default Accordion;
+
+
+================================================================
+FILE: src/components/common/DetailRow.jsx
+================================================================
+/**
+ * Icon-led label/value row used in sidebars (event cost breakdown, etc).
+ * @param {string} icon - iconify icon name
+ * @param {string} label
+ * @param {React.ReactNode} value
+ */
+const DetailRow = ({ icon, label, value }) => (
+  <li className="flex justify-between items-center border-b border-body/20 py-3 last:border-none">
+    <div className="flex items-center gap-3">
+      <div className="bg-primary w-14 h-14 p-3 rounded-full border-card flex items-center justify-center shrink-0">
+        <img src={icon} alt="" aria-hidden="true" className="w-full h-full object-contain" />
+      </div>
+      <strong className="text-heading-1">{label}</strong>
+    </div>
+    <div className="text-right">{value}</div>
+  </li>
+);
+
+export default DetailRow;
+
+
+================================================================
+FILE: src/components/common/FormField.jsx
+================================================================
+import { Icon } from "@iconify/react";
+
+/**
+ * Label + icon-led input field, used in multi-field forms like Contact.
+ * @param {string} label
+ * @param {string} icon - iconify icon name
+ * @param {boolean} [required]
+ */
+const FormField = ({ label, icon, required, className = "", ...rest }) => (
+  <div className={`space-y-1.5 ${className}`}>
+    <label className="text-xs font-bold text-heading-1 uppercase tracking-wide">
+      {label} {required && <span className="text-primary-7">*</span>}
+    </label>
+    <div className="relative">
+      <Icon icon={icon} className="absolute left-4 top-1/2 -translate-y-1/2 text-body text-lg pointer-events-none" />
+      <input
+        required={required}
+        className="w-full h-14 pl-12 pr-5 border border-gray-200 rounded-2xl bg-body-bg text-heading-1 placeholder:text-body/50 text-sm outline-none focus:border-primary-2 transition-colors"
+        {...rest}
+      />
+    </div>
+  </div>
+);
+
+export default FormField;
+
+
+================================================================
+FILE: src/components/common/InfoBox.jsx
+================================================================
+/**
+ * Small bordered info tile with a title and a single line of body copy.
+ * @param {string} title
+ * @param {string} children
+ */
+const InfoBox = ({ title, children }) => (
+  <div className="border border-gray-200 rounded-xl p-6">
+    <h4 className="font-bold text-xl mb-2 font-display">{title}</h4>
+    <p className="text-gray-600">{children}</p>
+  </div>
+);
+
+export default InfoBox;
+
+
+================================================================
+FILE: src/components/common/ScrollToTop.jsx
+================================================================
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useAOSRefresh } from "@hooks/useAOS";
+import { Icon } from "@iconify/react";
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  const [showButton, setShowButton] = useState(false);
+
+  useAOSRefresh(pathname);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowButton(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <>
+      {showButton && (
+        <button
+          onClick={scrollTop}
+          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+          aria-label="Scroll to top"
+        >
+          <Icon icon="mdi:arrow-up" width="24" height="24" />
+        </button>
+      )}
+    </>
+  );
+};
+
+export default ScrollToTop;
+
+
+================================================================
+FILE: src/components/common/SkillBar.jsx
+================================================================
+/**
+ * Horizontal progress bar for a labeled skill/percentage pair.
+ * @param {string} label
+ * @param {number} percent - 0-100
+ */
+const SkillBar = ({ label, percent }) => (
+  <div>
+    <div className="flex justify-between mb-2 text-sm font-medium text-heading-1">
+      <span>{label}</span>
+      <span>{percent}%</span>
+    </div>
+    <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+      <div className="h-3 bg-primary rounded-full transition-all duration-700" style={{ width: `${percent}%` }} />
+    </div>
+  </div>
+);
+
+export default SkillBar;
+
+
+================================================================
+FILE: src/components/layout/Footer.jsx
+================================================================
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Logo from "./Logo";
+import blog1 from "@assets/blog-07.jpg";
+import blog2 from "@assets/blog-08.jpg";
+
+const ABOUT_LINKS = ["About Us", "Teachers", "Events", "Pricing"];
+const COURSE_LINKS = ["Courses", "Blog", "Programs", "Contact Us"];
+
+const RECENT_POSTS = [
+  { image: blog1, date: "October 29, 2026", title: "Avoid These 4 Common Mistakes When Managing Remote Teams" },
+  { image: blog2, date: "October 30, 2026", title: "How To Draw Realistic Lips In 7 Simple Steps" },
+];
+
+const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://www.facebook.com/" },
+  { label: "Twitter", href: "https://twitter.com/" },
+  { label: "Instagram", href: "https://www.instagram.com/" },
+];
+
+/** Small internal helper — avoids repeating the same <ul> markup twice. */
+const FooterLinkGroup = ({ title, links }) => (
+  <div>
+    <h4 className="text-xl font-semibold mb-6 relative inline-block font-display">
+      {title}
+      <span className="absolute left-0 -bottom-2 w-10 h-1 bg-primary rounded-full" />
+    </h4>
+    <ul className="space-y-4">
+      {links.map((item) => (
+        <li key={item}>
+          <a href="#" className="text-gray-600 hover:text-heading-1 transition-all duration-300 hover:translate-x-2 inline-block">
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const Footer = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    // Hook this up to your email service of choice (Mailchimp, ConvertKit, etc.)
+    setEmail("");
+  };
+
+  return (
+    <footer className="relative bg-bg pt-16 lg:pt-24 overflow-hidden" id="footer">
+      <div className="container-base">
+        {/* Newsletter */}
+        <div className="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 font-display text-heading-1">
+            Don't Miss a Story From Our Alumni
+          </h3>
+
+          <form
+            onSubmit={handleSubscribe}
+            className="max-w-2xl mx-auto hidden lg:flex items-center gap-3 bg-white border-2 border-heading-1 rounded-full p-2 shadow-xl"
+          >
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email address"
+              className="w-full flex-1 px-6 py-4 bg-transparent outline-none text-heading-1 placeholder:text-gray-500"
+            />
+            <button
+              type="submit"
+              className="w-full sm:w-auto min-w-45 h-14 px-8 rounded-full bg-heading-1 text-white font-semibold transition-all duration-300 hover:bg-primary hover:text-heading-1 hover:scale-105 cursor-pointer"
+            >
+              Subscribe Now
+            </button>
+          </form>
+        </div>
+
+        {/* Link columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-12 border-b border-gray-300">
+          <div data-aos="fade-right">
+            <div className="w-50 h-22 bg-white rounded-md">
+              <Logo />
+            </div>
+            <p className="mt-5 text-gray-600 leading-7">
+              We are passionate about education and dedicated to providing high-quality
+              learning resources for students from all backgrounds.
+            </p>
+            <ul className="mt-6 space-y-4">
+              <li className="flex items-center gap-3 text-gray-700">
+                <Icon icon="boxicons:location" className="text-xl shrink-0" />
+                Yarra Park, Melbourne, Australia
+              </li>
+              <li className="flex items-center gap-3 text-gray-700">
+                <Icon icon="material-symbols:call-outline" className="text-xl shrink-0" />
+                +(61) 485-826-710
+              </li>
+            </ul>
+          </div>
+
+          <div data-aos="fade-up" data-aos-delay="150">
+            <FooterLinkGroup title="About Us" links={ABOUT_LINKS} />
+          </div>
+
+          <div data-aos="fade-up" data-aos-delay="300">
+            <FooterLinkGroup title="Our Courses" links={COURSE_LINKS} />
+          </div>
+
+          <div data-aos="fade-left">
+            <h4 className="text-xl font-semibold mb-6 relative inline-block font-display">
+              Recent Posts
+              <span className="absolute left-0 -bottom-2 w-10 h-1 bg-primary rounded-full" />
+            </h4>
+            <div className="space-y-5">
+              {RECENT_POSTS.map((post) => (
+                <div key={post.title} className="group flex gap-4 cursor-pointer">
+                  <div className="overflow-hidden rounded-xl w-20 h-20 shrink-0">
+                    <img
+                      src={post.image}
+                      alt=""
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">{post.date}</p>
+                    <h6 className="font-medium leading-6 transition-colors duration-300 group-hover:text-primary-2">
+                      {post.title}
+                    </h6>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-gray-600 text-center md:text-left">
+            © {new Date().getFullYear()} EduKids. All Rights Reserved.
+          </p>
+
+          <div className="flex items-center gap-5">
+            {SOCIAL_LINKS.map((social) => (
+              <Link
+                key={social.label}
+                to={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-heading-1 transition duration-300 hover:-translate-y-1"
+              >
+                {social.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+
+================================================================
+FILE: src/components/layout/Logo.jsx
+================================================================
+import { Link } from "react-router-dom";
+import logo from "@assets/logo.png";
+
+const Logo = ({ className = "" }) => (
+  <Link to="/" className={className} aria-label="EduKids home">
+    <img src={logo} alt="EduKids" className="w-full h-full object-contain" />
+  </Link>
+);
+
+export default Logo;
+
+
+================================================================
+FILE: src/components/layout/Menu.jsx
+================================================================
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import { navLinks } from "@data/navLinks";
+
+const DropdownList = ({ items, onNavigate, mobile }) => (
+  <ul
+    className={
+      mobile
+        ? "pl-4 border-l border-gray-200 mt-2 space-y-0.5"
+        : "absolute left-0 top-full min-w-62.5 bg-white shadow-xl rounded-2xl py-3 px-2 z-50 opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
+    }
+  >
+    {items.map((item) => (
+      <li key={item.path}>
+        <Link
+          to={item.path}
+          onClick={onNavigate}
+          className="block px-4 py-2.5 text-sm rounded-xl hover:bg-primary-2/10 hover:text-primary-2 transition-colors"
+        >
+          {item.label}
+        </Link>
+      </li>
+    ))}
+  </ul>
+);
+
+/**
+ * Primary site navigation. Renders desktop hover-dropdowns or, when
+ * `mobile` is true, an accordion-style list suited to the slide-down panel.
+ *
+ * @param {boolean} [mobile]
+ * @param {Function} [onNavigate] - called after a link is clicked (used to close the mobile panel)
+ */
+const Menu = ({ mobile = false, onNavigate }) => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleDropdown = (index) => {
+    if (!mobile) return;
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
+
+  return (
+    <ul className={mobile ? "flex flex-col gap-1" : "flex items-center gap-12"}>
+      {navLinks.map((item, index) => {
+        const isOpen = openIndex === index;
+
+        if (!item.children) {
+          return (
+            <li key={item.label}>
+              <Link
+                to={item.path}
+                onClick={onNavigate}
+                className="block py-3 font-medium text-heading-1 hover:text-primary-2 transition-colors"
+              >
+                {item.label}
+              </Link>
+            </li>
+          );
+        }
+
+        return (
+          <li key={item.label} className={`relative ${!mobile ? "group" : ""}`}>
+            <button
+              type="button"
+              onClick={() => toggleDropdown(index)}
+              className="w-full py-3 font-medium text-heading-1 hover:text-primary-2 transition-colors flex items-center justify-between gap-2 cursor-pointer"
+            >
+              {item.label}
+              <Icon
+                icon="oui:arrow-down"
+                width={16}
+                className={`transition-transform duration-300 ${
+                  mobile && isOpen ? "rotate-180" : ""
+                } ${!mobile ? "group-hover:rotate-180" : ""}`}
+              />
+            </button>
+
+            {mobile ? (
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  isOpen ? "max-h-125 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <DropdownList items={item.children} onNavigate={onNavigate} mobile />
+              </div>
+            ) : (
+              <DropdownList items={item.children} onNavigate={onNavigate} />
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+export default Menu;
+
+
+================================================================
+FILE: src/components/layout/Navbar.jsx
+================================================================
+import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
+import gsap from "gsap";
+import Logo from "./Logo";
+import Menu from "./Menu";
+import Button from "../ui/Button";
+
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Entrance animation, once on mount
+  useEffect(() => {
+    gsap.from(".navbar-shell", {
+      y: -40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    });
+  }, []);
+
+  // Shrink + add shadow once the page has scrolled a little
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close the mobile panel automatically whenever a link inside it is clicked
+  const closeMobileMenu = () => setMenuOpen(false);
+
+  return (
+    <header className="fixed top-8 left-0 w-full z-50 px-2 sm:px-0">
+      <div className="container-base">
+        <nav
+          className={`navbar-shell flex items-center justify-between h-22 lg:h-24 border-card px-5 lg:px-8 rounded-full bg-white transition-shadow duration-300 mt-5 opacity-100! ${
+            scrolled ? "shadow-lg" : ""
+          }`}
+        >
+          <Logo className="w-32 lg:w-40 shrink-0" />
+
+          <div className="hidden lg:block">
+            <Menu />
+          </div>
+
+          <div className="hidden lg:block shrink-0">
+            <Button to="/about" text="Admission Now" />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="lg:hidden text-3xl text-heading-1 cursor-pointer"
+          >
+            <Icon icon={menuOpen ? "material-symbols:close-rounded" : "material-symbols:menu-rounded"} />
+          </button>
+        </nav>
+
+        {/* Mobile slide-down panel */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+            menuOpen ? "max-h-175 opacity-100 mt-2" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="bg-white rounded-3xl p-6 shadow-lg border-card">
+            <Menu mobile onNavigate={closeMobileMenu} />
+            <div className="mt-5">
+              <Button to="/about" text="Admission Now" className="w-full" onClick={closeMobileMenu} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
+
+
+================================================================
+FILE: src/components/ui/Breadcrumb.jsx
+================================================================
+import { Link } from "react-router-dom";
+import breadcrumbBg from "@assets/breadcrumb-bg.jpg";
+
+/**
+ * Page-top hero banner used on every inner route (About, Team, Blog, etc).
+ *
+ * @param {string} title - large heading shown in the banner
+ * @param {string} [parentTitle] - breadcrumb trail start label
+ * @param {string} [parentLink] - breadcrumb trail start path
+ * @param {string} currentPage - breadcrumb trail end label
+ */
+const Breadcrumb = ({ title, parentTitle = "Home", parentLink = "/", currentPage }) => (
+  <div
+    className="min-h-87.5 lg:min-h-112.5 w-full flex items-center bg-cover bg-center bg-no-repeat relative"
+    style={{ backgroundImage: `url(${breadcrumbBg})` }}
+  >
+    <div className="absolute inset-0 bg-secondary/55" aria-hidden="true" />
+
+    <div className="container-base relative z-10 w-full">
+      <ul className="flex flex-wrap items-center gap-2 text-sm md:text-base text-white/80 mb-4">
+        <li>
+          <Link to={parentLink} className="hover:text-primary transition-colors font-display">
+            {parentTitle}
+          </Link>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li className="text-white font-display">{currentPage}</li>
+      </ul>
+
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight font-display">
+        {title}
+      </h1>
+    </div>
+  </div>
+);
+
+export default Breadcrumb;
+
+
+================================================================
+FILE: src/components/ui/Button.jsx
+================================================================
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+
+const VARIANTS = {
+  primary: "bg-primary text-heading-1 border-heading-1",
+  dark: "bg-heading-1 text-white border-heading-1",
+  outline: "bg-transparent text-heading-1 border-heading-1",
+  white: "bg-white text-heading-1 border-heading-1",
+};
+
+const SIZES = {
+  sm: "px-5 py-2.5 text-sm",
+  md: "px-7 py-3.5 text-sm",
+  lg: "px-9 py-4 text-base",
+};
+
+/**
+ * Shared call-to-action button. Renders as a router <Link> when `to` is
+ * provided, otherwise as a native <button>.
+ *
+ * @param {string}  text     - label
+ * @param {string}  [to]     - route path; if set, renders as a <Link>
+ * @param {"button"|"submit"} [type] - native button type (ignored when `to` is set)
+ * @param {"primary"|"dark"|"outline"|"white"} [variant]
+ * @param {"sm"|"md"|"lg"} [size]
+ * @param {string}  [icon]   - optional iconify icon name, rendered after the label
+ * @param {Function} [onClick]
+ */
+const Button = ({
+  text,
+  to,
+  type = "button",
+  variant = "primary",
+  size = "md",
+  icon,
+  className = "",
+  onClick,
+}) => {
+  const classes = `
+    inline-flex items-center justify-center gap-2 rounded-full font-display font-bold
+    leading-none whitespace-nowrap cursor-pointer select-none
+    border-2 border-b-4 border-r-4
+    transition-all duration-300 ease-out
+    hover:-translate-y-0.5 hover:shadow-[4px_6px_0px_rgba(38,38,38,1)]
+    active:translate-y-0 active:shadow-none
+    ${VARIANTS[variant]} ${SIZES[size]} ${className}
+  `.trim();
+
+  const content = (
+    <>
+      {text}
+      {icon && <Icon icon={icon} width={18} />}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className={classes}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} onClick={onClick} className={classes}>
+      {content}
+    </button>
+  );
+};
+
+export default Button;
+
+
+================================================================
+FILE: src/components/ui/Input.jsx
+================================================================
+import { Icon } from "@iconify/react";
+
+/**
+ * Shared text input. Supports an optional label, leading icon, and
+ * forwards any native input prop (value, onChange, placeholder, etc.).
+ *
+ * @param {string}  [label]
+ * @param {string}  [icon] - iconify icon name shown at the start of the field
+ * @param {string}  [type]
+ * @param {string}  [className] - applied to the wrapping element
+ */
+const Input = ({
+  label,
+  icon,
+  type = "text",
+  className = "",
+  inputClassName = "",
+  ...rest
+}) => {
+  return (
+    <div className={`w-full ${className}`}>
+      {label && (
+        <label className="block mb-2 text-sm font-semibold text-heading-1">
+          {label}
+        </label>
+      )}
+
+      <div className="relative flex items-center">
+        {icon && (
+          <Icon
+            icon={icon}
+            width={20}
+            className="absolute left-5 text-body pointer-events-none"
+          />
+        )}
+
+        <input
+          type={type}
+          className={`
+            w-full rounded-full border-2 border-heading-1 bg-white
+            px-6 py-3.5 text-heading-1 placeholder:text-body/70
+            outline-none transition-all duration-300
+            focus:border-primary-2 focus:ring-4 focus:ring-primary-2/15
+            ${icon ? "pl-13" : ""} ${inputClassName}
+          `}
+          {...rest}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Input;
+
+
+================================================================
+FILE: src/components/ui/SectionHeading.jsx
+================================================================
+import subtitleImg from "@assets/title-img.svg";
+
+/**
+ * Standardized section header: eyebrow badge + heading + supporting copy.
+ * This single component replaces the near-identical markup that was
+ * copy-pasted into About, Category, Classes, Courses, Event, Blog, Team,
+ * Testimonials, and Gallery.
+ *
+ * @param {string} eyebrow - small badge label (e.g. "About Us")
+ * @param {React.ReactNode} title - heading text (string or JSX with <br/>, spans, etc.)
+ * @param {string} [description] - supporting paragraph
+ * @param {"left"|"center"} [align]
+ * @param {string} [className]
+ */
+const SectionHeading = ({
+  eyebrow,
+  title,
+  description,
+  align = "center",
+  className = "",
+}) => {
+  const alignment = align === "center" ? "text-center items-center mx-auto" : "text-left items-start";
+
+  return (
+    <div
+      className={`flex flex-col ${alignment} ${className}`}
+      data-aos="fade-up"
+    >
+      {eyebrow && (
+        <span className="sub-title mb-4">
+          <img src={subtitleImg} alt="" className="w-9 h-9" aria-hidden="true" />
+          {eyebrow}
+        </span>
+      )}
+
+      <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.15] font-extrabold text-heading-1 mb-5">
+        {title}
+      </h2>
+
+      {description && (
+        <p className={`text-lg text-body leading-relaxed ${align === "center" ? "max-w-xl" : "max-w-lg"}`}>
+          {description}
+        </p>
+      )}
+    </div>
+  );
+};
+
+export default SectionHeading;
+
+
+================================================================
+FILE: src/components/ui/SliderArrows.jsx
+================================================================
+import { Icon } from "@iconify/react";
+
+/**
+ * Prev/next arrow pair for Splide carousels. Pass the Splide ref's
+ * `.current.splide` instance via the `splide` getter so this stays
+ * decoupled from any single slider's ref.
+ *
+ * @param {() => object} getSplide - returns the live splide instance
+ * @param {string} [className] - positions the wrapper (each slider needs different offsets)
+ */
+const SliderArrows = ({ getSplide, className = "" }) => {
+  const go = (direction) => () => getSplide()?.go(direction);
+
+  return (
+    <div className={className}>
+      <button
+        type="button"
+        aria-label="Previous slide"
+        onClick={go("-1")}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-primary border-2 border-heading-1 flex items-center justify-center transition-transform duration-300 hover:scale-110 cursor-pointer"
+      >
+        <Icon icon="solar:arrow-left-bold" className="text-2xl" />
+      </button>
+
+      <button
+        type="button"
+        aria-label="Next slide"
+        onClick={go("+1")}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-primary border-2 border-heading-1 flex items-center justify-center transition-transform duration-300 hover:scale-110 cursor-pointer"
+      >
+        <Icon icon="solar:arrow-right-bold" className="text-2xl" />
+      </button>
+    </div>
+  );
+};
+
+export default SliderArrows;
+
+
+================================================================
+FILE: src/data/blogs.js
+================================================================
+import blog1 from "@assets/blog-01.jpg";
+import blog2 from "@assets/blog-02.jpg";
+import blog3 from "@assets/blog-03.jpg";
+import blog4 from "@assets/blog-04.jpg";
+import blog5 from "@assets/blog-05.jpg";
+import blog6 from "@assets/blog-06.jpg";
+
+export const blogs = [
+  {
+    id: 1,
+    image: blog1,
+    category: "Marketing",
+    type: "Blog",
+    title: "Announcing the Winners of the 2023 Education.com Story Contest",
+    description:
+      "You'll find something to spark your curiosity and enhance your learning journey through inspiring educational stories.",
+    author: "Jon Adam",
+    authorRole: "Education Content Specialist",
+    date: "December 26, 2026",
+
+    content: [
+      "Education.com is excited to announce the winners of the 2023 Story Contest. Hundreds of students participated by submitting original stories that showcased creativity, imagination, and exceptional writing skills.",
+
+      "The competition encouraged young writers to express their ideas while developing communication and storytelling abilities. Each submission was carefully evaluated by a panel of educators and content experts.",
+
+      "The winning entries stood out because of their originality, emotional impact, and ability to engage readers. These stories demonstrate the power of creativity in education and inspire future generations of writers.",
+    ],
+
+    quote:
+      "Stories have the power to educate, inspire, and transform young minds.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "Why Creative Writing Matters",
+
+    sectionContent:
+      "Creative writing helps students improve language skills, develop confidence, and explore their imagination. It also strengthens problem-solving abilities and encourages self-expression.",
+
+    highlights: [
+      "Develops communication skills",
+      "Encourages creativity and imagination",
+      "Builds confidence in writing",
+      "Improves reading comprehension",
+      "Supports lifelong learning",
+    ],
+
+    tags: ["Education", "Students", "Writing", "Learning", "Creativity"],
+  },
+
+  {
+    id: 2,
+    image: blog2,
+    category: "Technology",
+    type: "Blog",
+    title: "Azure AI Fundamentals: How to Pass the AI-900 Exam",
+    description:
+      "A complete guide to understanding Azure AI concepts and preparing effectively for the AI-900 certification exam.",
+    author: "Jon Adam",
+    authorRole: "Cloud & AI Instructor",
+    date: "December 24, 2026",
+
+    content: [
+      "The Microsoft AI-900 certification is designed for beginners who want to understand artificial intelligence and Azure AI services. It provides a strong foundation for future AI learning paths.",
+
+      "Candidates should focus on machine learning fundamentals, computer vision, natural language processing, and responsible AI principles. Understanding Azure services is also critical for success.",
+
+      "Regular practice tests, hands-on Azure experience, and reviewing official learning resources can significantly improve exam performance.",
+    ],
+
+    quote:
+      "Certification is not just about passing an exam—it is about building real-world knowledge.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "AI-900 Exam Preparation Tips",
+
+    sectionContent:
+      "Create a study plan, use Microsoft Learn resources, complete practice assessments, and gain practical experience with Azure AI services.",
+
+    highlights: [
+      "Understand AI workloads",
+      "Learn Azure AI services",
+      "Practice with real-world examples",
+      "Review responsible AI concepts",
+      "Take mock examinations",
+    ],
+
+    tags: ["Azure", "AI", "Certification", "Microsoft", "Cloud"],
+  },
+
+  {
+    id: 3,
+    image: blog3,
+    category: "Marketing",
+    type: "Blog",
+    title: "Top Digital Marketing Strategies for Modern Businesses",
+    description:
+      "Discover proven digital marketing techniques to grow your online presence and increase customer engagement.",
+    author: "Jon Adam",
+    authorRole: "Digital Marketing Consultant",
+    date: "December 23, 2026",
+
+    content: [
+      "Digital marketing continues to evolve as businesses adopt new technologies and customer expectations change. Companies must build strong online strategies to remain competitive.",
+
+      "Content marketing, SEO, social media campaigns, and email marketing remain among the most effective channels for reaching target audiences.",
+
+      "Organizations that analyze customer behavior and leverage data-driven insights can improve conversion rates and strengthen customer relationships.",
+    ],
+
+    quote:
+      "Successful marketing is about delivering the right message to the right audience at the right time.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "Essential Marketing Techniques",
+
+    sectionContent:
+      "Combining content marketing, social media, search engine optimization, and analytics creates a powerful growth strategy for businesses.",
+
+    highlights: [
+      "Search Engine Optimization",
+      "Social Media Marketing",
+      "Email Campaigns",
+      "Content Creation",
+      "Performance Analytics",
+    ],
+
+    tags: ["Marketing", "SEO", "Business", "Growth", "Digital"],
+  },
+
+  {
+    id: 4,
+    image: blog4,
+    category: "Artificial Intelligence",
+    type: "Blog",
+    title: "The Future of Artificial Intelligence in Education",
+    description:
+      "Learn how AI is transforming classrooms, learning experiences, and educational outcomes worldwide.",
+    author: "Jon Adam",
+    authorRole: "AI Education Researcher",
+    date: "December 12, 2026",
+
+    content: [
+      "Artificial Intelligence is changing the educational landscape by enabling personalized learning experiences tailored to each student's needs.",
+
+      "AI-powered tools help educators automate repetitive tasks, identify learning gaps, and provide real-time feedback to learners.",
+
+      "As technology advances, AI will continue to improve accessibility, engagement, and learning outcomes across educational institutions.",
+    ],
+
+    quote:
+      "AI is not replacing teachers; it is empowering them to teach more effectively.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "Benefits of AI in Learning",
+
+    sectionContent:
+      "AI enhances education through adaptive learning systems, intelligent tutoring, automated assessments, and improved accessibility.",
+
+    highlights: [
+      "Personalized learning",
+      "Automated assessments",
+      "Improved accessibility",
+      "Real-time feedback",
+      "Enhanced student engagement",
+    ],
+
+    tags: ["AI", "Education", "Technology", "Learning", "Innovation"],
+  },
+
+  {
+    id: 5,
+    image: blog5,
+    category: "Development",
+    type: "Blog",
+    title: "10 Essential Skills Every Developer Should Learn",
+    description:
+      "Explore the most valuable technical and soft skills developers need to stay competitive in today's market.",
+    author: "Jon Adam",
+    authorRole: "Senior Software Engineer",
+    date: "December 21, 2026",
+
+    content: [
+      "Modern developers need more than coding knowledge. Problem-solving, communication, and adaptability are equally important for career success.",
+
+      "Understanding version control systems, cloud technologies, APIs, databases, and testing frameworks can significantly improve productivity.",
+
+      "Continuous learning remains one of the most important habits for developers as technologies evolve rapidly.",
+    ],
+
+    quote:
+      "The best developers never stop learning and improving their skills.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "Core Developer Competencies",
+
+    sectionContent:
+      "Technical expertise combined with teamwork, communication, and analytical thinking creates well-rounded software professionals.",
+
+    highlights: [
+      "JavaScript & Modern Frameworks",
+      "Database Management",
+      "Cloud Computing",
+      "Version Control",
+      "Problem Solving",
+    ],
+
+    tags: ["Programming", "Development", "Career", "Coding", "Technology"],
+  },
+
+  {
+    id: 6,
+    image: blog6,
+    category: "E-Learning",
+    type: "Blog",
+    title: "Building a Successful Online Learning Platform",
+    description:
+      "Understand the key features, strategies, and technologies behind successful e-learning platforms.",
+    author: "Jon Adam",
+    authorRole: "EdTech Consultant",
+    date: "December 28, 2026",
+
+    content: [
+      "Online learning platforms have transformed education by making quality learning resources accessible worldwide.",
+
+      "Successful platforms focus on user experience, engaging content, mobile accessibility, and personalized learning journeys.",
+
+      "Technology, analytics, and community engagement play critical roles in ensuring long-term learner success and platform growth.",
+    ],
+
+    quote:
+      "A great learning platform makes education accessible, engaging, and effective for everyone.",
+
+    quoteAuthor: "Jon Adam",
+
+    sectionTitle: "Key Features of Modern E-Learning",
+
+    sectionContent:
+      "Interactive courses, assessments, certificates, discussion forums, and mobile-friendly experiences are essential for success.",
+
+    highlights: [
+      "Interactive Video Lessons",
+      "Progress Tracking",
+      "Mobile Accessibility",
+      "Certificates of Completion",
+      "Community Engagement",
+    ],
+
+    tags: ["E-Learning", "Education", "Technology", "Courses", "Learning"],
+  },
+];
+
+
+================================================================
+FILE: src/data/contact.js
+================================================================
+export const contactCards = [
+  {
+    icon: "solar:phone-calling-bold",
+    label: "Call Us",
+    primary: "+0 123 456 789",
+    secondary: "Mon – Fri, 9am to 6pm",
+    iconBg: "bg-primary",
+  },
+  {
+    icon: "solar:letter-bold",
+    label: "Email Us",
+    primary: "info@edukids.com",
+    secondary: "We reply within 24 hours",
+    iconBg: "bg-primary-2",
+  },
+  {
+    icon: "solar:map-point-wave-bold",
+    label: "Find Us",
+    primary: "55 Clark St, Brooklyn",
+    secondary: "NY 11201, USA",
+    iconBg: "bg-secondary",
+  },
+];
+
+export const workingHours = [
+  { day: "Monday – Friday", hours: "9:00 AM – 6:00 PM", closed: false },
+  { day: "Saturday", hours: "10:00 AM – 4:00 PM", closed: false },
+  { day: "Sunday", hours: "Closed", closed: true },
+];
+
+export const socialLinks = [
+  { icon: "mdi:facebook", label: "Facebook", hoverBg: "hover:bg-facebook" },
+  { icon: "mdi:twitter", label: "Twitter", hoverBg: "hover:bg-twitter" },
+  { icon: "mdi:instagram", label: "Instagram", hoverBg: "hover:bg-instagram" },
+  { icon: "mdi:linkedin", label: "LinkedIn", hoverBg: "hover:bg-linkedin" },
+  { icon: "mdi:youtube", label: "YouTube", hoverBg: "hover:bg-youtube" },
+];
+
+
+================================================================
+FILE: src/data/courses.js
+================================================================
+import course1 from "@assets/course-image-01.jpg";
+import course2 from "@assets/course-image-02.jpg";
+import course3 from "@assets/course-image-03.jpg";
+import course4 from "@assets/course-image-04.jpg";
+import course5 from "@assets/course-image-05.jpg";
+import course6 from "@assets/course-image-06.jpg";
+import course7 from "@assets/course-image-07.jpg";
+import course8 from "@assets/course-image-08.jpg";
+
+import author1 from "@assets/author-01.png";
+import author2 from "@assets/author-02.png";
+import author3 from "@assets/author-03.png";
+import author4 from "@assets/author-04.png";
+import author5 from "@assets/author-02.png";
+import author6 from "@assets/author-03.png";
+import author7 from "@assets/author-02.png";
+import author8 from "@assets/author-03.png";
+
+export const courses = [
+  {
+    id: 1,
+    courseImage: course1,
+    authorImage: author1,
+    title: "Little Adventurers Travel the World Together!",
+    className: "bg-primary-2",
+    age: "3-8",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "124",
+    instructor: "Maria Sofa",
+    price: "$15",
+
+    about:
+      "A fun travel-themed course for young learners who love exploring the world. Children will discover countries, cultures, landmarks, and exciting adventures through playful learning activities.",
+
+    description:
+      "This course introduces children to global travel in a simple and engaging way. Students will learn about different places, traditions, and famous destinations while building creativity, curiosity, and communication skills. The lessons are designed to inspire imagination and make learning feel like a real adventure.",
+
+    level: "Beginner",
+    students: "1240",
+    lectures: "18",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Introduction",
+        lessons: [
+          "Welcome to the Course",
+          "Meet Your Instructor",
+          "Course Overview",
+        ],
+      },
+      {
+        title: "World Adventures",
+        lessons: ["Exploring Europe", "Discovering Asia", "Amazing Landmarks"],
+      },
+      {
+        title: "Creative Activities",
+        lessons: [
+          "Travel Storytelling",
+          "Cultural Projects",
+          "Final Adventure Challenge",
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 2,
+    courseImage: course2,
+    authorImage: author2,
+    title: "Weekly English Language Arts Club (Age 9-13)",
+    className: "bg-primary-5",
+    age: "4-10",
+    duration: "60 Min",
+    rating: "4.9",
+    reviews: "210",
+    instructor: "Arya Stark",
+    price: "$10",
+
+    about:
+      "A weekly English learning club focused on reading, writing, grammar, and speaking. It helps students build confidence in language skills through fun and interactive sessions.",
+
+    description:
+      "This course is designed to strengthen English Language Arts skills in a supportive and creative environment. Students will practice reading comprehension, grammar, vocabulary, writing, and communication through structured activities and weekly lessons. It is a great choice for learners who want to improve fluency and express their ideas better.",
+
+    level: "Intermediate",
+    students: "2100",
+    lectures: "24",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Introduction",
+        lessons: ["Course Overview", "Reading Basics", "Writing Fundamentals"],
+      },
+      {
+        title: "Language Skills",
+        lessons: [
+          "Grammar Practice",
+          "Vocabulary Building",
+          "Reading Comprehension",
+        ],
+      },
+      {
+        title: "Creative Writing",
+        lessons: ["Story Writing", "Essay Writing", "Final Project"],
+      },
+    ],
+  },
+
+  {
+    id: 3,
+    courseImage: course3,
+    authorImage: author3,
+    title: "Dragon, Monster & Magical Creature Drawing Club",
+    className: "bg-primary-3",
+    age: "3-8",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "88",
+    instructor: "Rosabell",
+    price: "$16",
+
+    about:
+      "A creative drawing course for students who love fantasy characters like dragons, monsters, and magical creatures. It teaches art in a fun and imaginative way.",
+
+    description:
+      "In this course, students will learn how to draw fantasy characters step by step. They will explore basic shapes, sketching techniques, color ideas, and creative design methods to bring dragons, monsters, and magical creatures to life. The course also helps improve imagination, confidence, and artistic skill.",
+
+    level: "Beginner",
+    students: "980",
+    lectures: "20",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Drawing Basics",
+        lessons: [
+          "Sketching Fundamentals",
+          "Shape Practice",
+          "Character Design",
+        ],
+      },
+      {
+        title: "Fantasy Creatures",
+        lessons: ["Drawing Dragons", "Drawing Monsters", "Creature Details"],
+      },
+      {
+        title: "Creative Projects",
+        lessons: ["Build Your Creature", "Color Techniques", "Final Artwork"],
+      },
+    ],
+  },
+
+  {
+    id: 4,
+    courseImage: course4,
+    authorImage: author4,
+    title: "Bloxburg 1 on 1 Class Learn to Build or Improve",
+    className: "bg-primary-9",
+    age: "3-8",
+    duration: "45 Min",
+    rating: "4.5",
+    reviews: "44",
+    instructor: "Morgan Jofs",
+    price: "$35",
+
+    about:
+      "A personalized Bloxburg building class that helps learners improve their building, decorating, and design skills with one-on-one guidance.",
+
+    description:
+      "This course teaches students how to build better houses, rooms, and creative spaces in Bloxburg. From layout planning to decoration and advanced design, learners will get practical tips to make their builds more polished and impressive. It is ideal for students who want to improve their creativity and building style in a focused way.",
+
+    level: "Advanced",
+    students: "740",
+    lectures: "16",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Building Basics",
+        lessons: ["Tools Overview", "Layout Design", "Planning"],
+      },
+      {
+        title: "Advanced Design",
+        lessons: ["Modern Homes", "Interior Design", "Decorations"],
+      },
+      {
+        title: "Final Build",
+        lessons: ["Custom Project", "Optimization", "Showcase"],
+      },
+    ],
+  },
+
+  {
+    id: 5,
+    courseImage: course5,
+    authorImage: author5,
+    title: "Girls Just Want to Have Fun Art and Ongoing Social Club",
+    className: "bg-primary-6",
+    age: "3-8",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "44",
+    instructor: "Maria Sofa",
+    price: "$35",
+
+    about:
+      "A fun and friendly art club where students can create, socialize, and enjoy creative activities together in a relaxed environment.",
+
+    description:
+      "This course combines art and social interaction to create a joyful learning experience. Students will explore drawing, painting, and craft activities while making friends and expressing themselves creatively. The class is designed to encourage confidence, creativity, and group participation in a positive space.",
+
+    level: "Beginner",
+    students: "1100",
+    lectures: "22",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Getting Started",
+        lessons: ["Introduction", "Materials", "Creative Ideas"],
+      },
+      {
+        title: "Art Activities",
+        lessons: ["Drawing", "Painting", "Craft Projects"],
+      },
+      {
+        title: "Showcase",
+        lessons: ["Group Project", "Presentation", "Celebration"],
+      },
+    ],
+  },
+
+  {
+    id: 6,
+    courseImage: course6,
+    authorImage: author6,
+    title: "Private Math Tutoring Grades 3rd-7th (One Time Class)",
+    className: "bg-primary-7",
+    age: "4-9",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "44",
+    instructor: "Arya Stark",
+    price: "$35",
+
+    about:
+      "A private math tutoring class for students who need extra support in school math topics. It focuses on building confidence, accuracy, and problem-solving skills.",
+
+    description:
+      "This one-on-one math class helps students understand important topics such as numbers, operations, fractions, geometry, and word problems. The lessons are personalized to the learner’s level so they can improve step by step. It is a strong choice for students who want focused support and better results in math.",
+
+    level: "Intermediate",
+    students: "1350",
+    lectures: "28",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Math Foundations",
+        lessons: ["Numbers", "Operations", "Practice"],
+      },
+      {
+        title: "Problem Solving",
+        lessons: ["Fractions", "Geometry", "Word Problems"],
+      },
+      {
+        title: "Assessment",
+        lessons: ["Review", "Quiz", "Final Evaluation"],
+      },
+    ],
+  },
+
+  {
+    id: 7,
+    courseImage: course7,
+    authorImage: author7,
+    title: "A Full One on One Roblox Game Making Experience",
+    className: "bg-primary-8",
+    age: "3-8",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "44",
+    instructor: "Rosabell",
+    price: "$35",
+
+    about:
+      "A complete one-on-one Roblox game creation class for students who want to learn game design, building, and development from scratch.",
+
+    description:
+      "This course teaches students how to make their own Roblox game using practical, easy-to-follow steps. Learners will explore game planning, building, scripting basics, testing, and publishing. It is perfect for students who want to turn their creativity into a playable game and understand how game development works.",
+
+    level: "Advanced",
+    students: "1560",
+    lectures: "26",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Game Development Basics",
+        lessons: ["Studio Setup", "Game Planning", "Assets"],
+      },
+      {
+        title: "Building Games",
+        lessons: ["Maps", "Characters", "Gameplay"],
+      },
+      {
+        title: "Publishing",
+        lessons: ["Testing", "Optimization", "Launch"],
+      },
+    ],
+  },
+
+  {
+    id: 8,
+    courseImage: course8,
+    authorImage: author8,
+    title: "Learn To Read With Teacher Tracy - Individual Beginner",
+    className: "bg-primary-5",
+    age: "7-9",
+    duration: "50 Min",
+    rating: "4.5",
+    reviews: "44",
+    instructor: "Morgan Jofs",
+    price: "$35",
+
+    about:
+      "A beginner reading class designed to help children build strong reading foundations, improve vocabulary, and gain confidence with words.",
+
+    description:
+      "This course supports young learners as they develop reading skills through phonics, short stories, pronunciation practice, and guided exercises. The lessons are simple, engaging, and carefully planned to help beginners improve fluency and understanding step by step. It is a great start for children who are learning to read independently.",
+
+    level: "Beginner",
+    students: "920",
+    lectures: "18",
+    certificate: true,
+
+    curriculum: [
+      {
+        title: "Reading Basics",
+        lessons: ["Alphabet", "Phonics", "Pronunciation"],
+      },
+      {
+        title: "Reading Practice",
+        lessons: ["Short Stories", "Vocabulary", "Fluency"],
+      },
+      {
+        title: "Final Review",
+        lessons: ["Reading Test", "Feedback", "Certificate"],
+      },
+    ],
+  },
+];
+
+
+================================================================
+FILE: src/data/events.js
+================================================================
+export const events = [
+  {
+    id: 1,
+    day: "29",
+    month: "January",
+    year: "2026",
+    title: "Annual Cultural Programme",
+    time: "9:00 AM - 12:00 PM",
+    location: "55 Clark St, Brooklyn, NY 11201, USA",
+    bgColor: "bg-primary-2",
+    textColor: "text-black",
+    percentage: "%60.00",
+    slot: "50",
+    bookedSlot: "30"
+  },
+  {
+    id: 2,
+    day: "05",
+    month: "March",
+    year: "2026",
+    title: "Science Exhibition",
+    time: "10:00 AM - 2:00 PM",
+    location: "21 Main Street, New York, USA",
+    bgColor: "bg-primary-5",
+    textColor: "text-black",
+    percentage: "%75.00",
+    slot: "75",
+    bookedSlot: "56"
+  },
+  {
+    id: 3,
+    day: "12",
+    month: "April",
+    year: "2026",
+    title: "World Drawing Day",
+    time: "11:00 AM - 1:00 PM",
+    location: "Downtown Art Center, Brooklyn, USA",
+    bgColor: "bg-primary-3",
+    textColor: "text-black",
+    percentage: "%50.00",
+    slot: "30",
+    bookedSlot: "15"
+  },
+  {
+    id: 4,
+    day: "19",
+    month: "May",
+    year: "2026",           
+    title: "Sports Competition",
+    time: "8:00 AM - 3:00 PM",
+    location: "National Sports Ground, New York, USA",
+    bgColor: "bg-primary-8",
+    textColor: "text-black",
+    percentage: "%90.00",
+    slot: "100",
+    bookedSlot: "90"
+  },
+  {
+    id: 5,
+    day: "28",
+    month: "March",
+    year: "2026",
+    title: "Father Day",
+    time: "8:00 AM - 3:00 PM",
+    location: "National Sports Ground, New York, USA",
+    bgColor: "bg-primary-9",
+    textColor: "text-black",
+    percentage: "%80.00",
+    slot: "150",
+    bookedSlot: "120"
+  },
+  {
+    id: 6,
+    day: "29",
+    month: "April",
+    year: "2026",
+    title: "Mother Day",
+    time: "8:00 AM - 3:00 PM",
+    location: "National Sports Ground, New York, USA",
+    bgColor: "bg-primary-4",
+    textColor: "text-black",
+    percentage: "%70.00",
+    slot: "200",
+    bookedSlot: "140"
+  },
+];
+
+
+================================================================
+FILE: src/data/navLinks.js
+================================================================
+export const navLinks = [
+  { label: "Home", path: "/" },
+  {
+    label: "Pages",
+    children: [
+      { label: "About Us", path: "/about" },
+      { label: "Team", path: "/team" },
+      { label: "Event", path: "/event" },
+      { label: "Pricing", path: "/pricing" },
+    ],
+  },
+  {
+    label: "Classes",
+    children: [{ label: "Courses", path: "/courses" }],
+  },
+  { label: "Blog", path: "/blog" },
+  { label: "Contact", path: "/contact" },
+];
+
+
+================================================================
+FILE: src/data/pricing.js
+================================================================
+export const pricingPlans = [
+  {
+    id: "basic",
+    planName: "Basic Plan",
+    price: "$39",
+    bgColor: "bg-primary-2",
+    badgeBg: "bg-white",
+    description:
+      "A great starting point for families exploring our programs with limited weekly sessions.",
+    features: [
+      { label: "Small (12 students) 3–6 years", included: true },
+      { label: "Basic subjects, limited access", included: true },
+      { label: "Track student progress", included: false },
+      { label: "Priority scheduling", included: false },
+      { label: "1-on-1 mentor sessions", included: false },
+    ],
+  },
+  {
+    id: "standard",
+    planName: "Standard Plan",
+    price: "$59",
+    bgColor: "bg-primary-5",
+    badgeBg: "bg-primary",
+    description:
+      "Our most popular plan — full subject access plus regular progress check-ins.",
+    features: [
+      { label: "Small (12 students) 3–6 years", included: true },
+      { label: "Full subject access", included: true },
+      { label: "24/7 system monitoring", included: true },
+      { label: "Priority scheduling", included: false },
+      { label: "1-on-1 mentor sessions", included: false },
+    ],
+  },
+  {
+    id: "premium",
+    planName: "Premium Plan",
+    price: "$99",
+    bgColor: "bg-primary-2",
+    badgeBg: "bg-white",
+    description:
+      "The complete experience — every feature unlocked, with dedicated mentor support.",
+    features: [
+      { label: "Small (12 students) 3–6 years", included: true },
+      { label: "Full subject access", included: true },
+      { label: "24/7 system monitoring", included: true },
+      { label: "Join millions of students worldwide", included: true },
+      { label: "Secure finance backup", included: true },
+    ],
+  },
+];
+
+
+================================================================
+FILE: src/data/teachers.js
+================================================================
+import teacher1 from "@assets/techer-01.jpg";
+import teacher2 from "@assets/techer-02.jpg";
+import teacher3 from "@assets/techer-03.jpg";
+import teacher4 from "@assets/techer-04.jpg";
+import teacher5 from "@assets/techer-05.jpg";
+import teacher6 from "@assets/techer-06.jpg";
+
+export const teachers = [
+  {
+    id: 1,
+    image: teacher1,
+    name: "Eleanor Alice",
+    designation: "Kids Teacher",
+    subject: "Early Literacy",
+    email: "eleanor@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "Eleanor brings ten years of early-childhood experience, turning reading time into the favorite part of every student's day.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+  {
+    id: 2,
+    image: teacher2,
+    name: "James Robert",
+    designation: "Kids Teacher",
+    subject: "Math & Logic",
+    email: "james@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "James makes numbers click through games and hands-on puzzles, helping kids build confidence one problem at a time.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+  {
+    id: 3,
+    image: teacher3,
+    name: "Catherine Avery",
+    designation: "Kids Teacher",
+    subject: "Creative Arts",
+    email: "catherine@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "Catherine's art studio is where shy students find their voice — every brushstroke is a step toward self-expression.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+  {
+    id: 4,
+    image: teacher4,
+    name: "Michael Smith",
+    designation: "Kids Teacher",
+    subject: "Science Discovery",
+    email: "michael@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "Michael turns the classroom into a lab — bubbling reactions and curious questions are a daily occurrence.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+  {
+    id: 5,
+    image: teacher5,
+    name: "Olivia Johnson",
+    designation: "Kids Teacher",
+    subject: "Music & Movement",
+    email: "olivia@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "Olivia believes rhythm builds focus — her music sessions are equal parts joyful and developmentally rich.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+  {
+    id: 6,
+    image: teacher6,
+    name: "William Davis",
+    designation: "Kids Teacher",
+    subject: "Language & Speech",
+    email: "william@edukids.com",
+    phone: "(123) 456-7890",
+    bio: "William's storytelling circles help every child find new words — and the courage to use them out loud.",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+  },
+];
+
+
+================================================================
+FILE: src/data/testimonials.js
+================================================================
+export const testimonials = [
+  {
+    name: "David John",
+    role: "Artist and Instructor",
+    review:
+      "I would highly recommend EduKids to anyone interested in early childhood education. It has provided my students with invaluable knowledge and a newfound passion for learning.",
+  },
+  {
+    name: "Sarah Wilson",
+    role: "Graphic Designer",
+    review:
+      "This program exceeded my expectations. The lessons were easy to follow, practical, and helped my daughter improve her skills significantly.",
+  },
+  {
+    name: "Michael Brown",
+    role: "Entrepreneur",
+    review:
+      "An amazing learning experience for my kids. The teachers explained everything clearly and the content was packed with valuable insights.",
+  },
+];
+
+
+================================================================
+FILE: src/hooks/useAOS.js
+================================================================
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+/**
+ * Initializes AOS (Animate On Scroll) once for the whole app.
+ * Mount this single hook at the App root — do NOT call AOS.init()
+ * again in individual pages/sections, or it will reset on every render.
+ */
+export const useAOS = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 60,
+    });
+  }, []);
+};
+
+/**
+ * Refreshes AOS and scrolls to top whenever the route changes.
+ * @param {string} pathname - current location.pathname from react-router
+ */
+export const useAOSRefresh = (pathname) => {
+  useEffect(() => {
+    AOS.refreshHard();
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+};
+
+
+================================================================
+FILE: src/hooks/useGSAP.js
+================================================================
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
+/**
+ * Runs a GSAP animation callback scoped to a container ref, with
+ * automatic context cleanup on unmount (prevents animation leaks
+ * when navigating between routes).
+ *
+ * @param {(ctx: { container: HTMLElement }) => void} callback - receives the container element
+ * @param {Array} deps - dependency array, defaults to mount-only
+ * @returns {React.RefObject} attach to the element you want to scope animations within
+ *
+ * @example
+ * const containerRef = useGSAP(({ container }) => {
+ *   gsap.from(container.querySelectorAll(".fade-in"), { opacity: 0, y: 40, stagger: 0.15 });
+ * });
+ */
+export const useGSAP = (callback, deps = []) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      callback({ container: containerRef.current });
+    }, containerRef);
+
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return containerRef;
+};
+
+
+================================================================
+FILE: src/hooks/useIsMobile.js
+================================================================
+import { useEffect, useState } from "react";
+
+/**
+ * Tracks whether the viewport matches a given max-width breakpoint.
+ * Defaults to Tailwind's `lg` breakpoint (1024px).
+ *
+ * @param {number} breakpoint - max-width in px considered "mobile"
+ * @returns {boolean} true if viewport width <= breakpoint
+ */
+export const useIsMobile = (breakpoint = 1024) => {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [breakpoint]);
+
+  return isMobile;
+};
+
+
+================================================================
+FILE: src/index.css
+================================================================
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --color-primary: #ffd335;
+  --color-primary-2: #7763e5;
+  --color-primary-3: #ff6d1c;
+  --color-primary-4: #b54cca;
+  --color-primary-5: #09a24f;
+  --color-primary-6: #c29663;
+  --color-primary-7: #ff4e41;
+  --color-primary-8: #20ad96;
+  --color-primary-9: #a89222;
+  --color-primary-10: #36348e;
+
+  /* Neutrals & semantic */
+  --color-secondary: #1f1f25;
+  --color-body: #737477;
+  --color-body-bg: #f9f8ff;
+  --color-bg: #ffd9ef;
+  --color-heading: #262626;
+  --color-white: #ffffff;
+
+  /* Social */
+  --color-facebook: #3b5997;
+  --color-twitter: #1ba1f2;
+  --color-youtube: #ed4141;
+  --color-linkedin: #0077b5;
+  --color-instagram: #c231a1;
+
+  /* Typography */
+  --font-display: "Nunito", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+
+  /* Borders */
+  --border-card: 2px 2px 5px 2px solid #262626;
+}
+
+/* Tailwind v4 theme tokens */
+@theme {
+  --color-primary: #ffd335;
+  --color-primary-2: #7763e5;
+  --color-primary-3: #ff6d1c;
+  --color-primary-4: #b54cca;
+  --color-primary-5: #09a24f;
+  --color-primary-6: #c29663;
+  --color-primary-7: #ff4e41;
+  --color-primary-8: #20ad96;
+  --color-primary-9: #a89222;
+  --color-primary-10: #36348e;
+  --color-secondary: #1f1f25;
+  --color-body: #737477;
+  --color-body-2: #f9f8ff;
+  --color-bg: #ffd9ef;
+  --color-heading-1: #262626;
+  --color-white: #ffffff;
+  --color-facebook: #3b5997;
+  --color-twitter: #1ba1f2;
+  --color-youtube: #ed4141;
+  --color-linkedin: #0077b5;
+  --color-instagram: #c231a1;
+}
+
+/* ─────────────────────────────────────────────
+   GLOBAL RESET & BASE
+───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-heading);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-transform: capitalize;
+  line-height: 1.2;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY CLASSES
+───────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Section spacing */
+.section-py {
+  padding-top: clamp(3rem, 6vw, 6rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.section-py-lg {
+  padding-top: clamp(4rem, 10vw, 10rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+/* Responsive container */
+.container-base {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Card border style */
+.border-card {
+  border-width: 2px 2px 5px 2px;
+  border-style: solid;
+  border-color: var(--color-heading);
+}
+
+/* Sub-title badge */
+.sub-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-primary-2);
+}
+
+/* ─────────────────────────────────────────────
+   BUTTON  (shared .btn-primary)
+───────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  border-width: 2px 4px 4px 2px;
+  border-style: solid;
+  border-color: var(--color-heading);
+  background: var(--color-primary);
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 211, 53, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────
+   KEYFRAME ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes slide-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+.animate-slide {
+  animation: slide-x 5s ease-in-out infinite;
+}
+
+@keyframes rotate-float {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(8deg) translateY(-10px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+.animate-rotate {
+  animation: rotate-float 6s ease-in-out infinite;
+}
+
+@keyframes zoom-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.animate-zoom {
+  animation: zoom-pulse 4s ease-in-out infinite;
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-bounce-soft {
+  animation: bounce-soft 3s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+.animate-swing {
+  animation: swing 4s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* ─────────────────────────────────────────────
+   AOS CUSTOM EASING
+───────────────────────────────────────────── */
+[data-aos] {
+  pointer-events: none;
+}
+[data-aos].aos-animate {
+  pointer-events: auto;
+}
+
+
+================================================================
+FILE: src/main.jsx
+================================================================
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+
+
+================================================================
+FILE: src/pages/about/About.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import Button from "@components/ui/Button";
+import AboutSection from "../home/sections/About";
+import Team from "../home/sections/Team";
+import Gallery from "../home/sections/Gallery";
+
+import about from "@assets/about-02.png";
+import subtitleImg from "@assets/title-img.svg";
+import shape from "@assets/round-shape.svg";
+import play from "@assets/play.svg";
+import element1 from "@assets/element-08.svg";
+import element2 from "@assets/element-09.svg";
+import element3 from "@assets/element-10.svg";
+
+const HIGHLIGHTS = [
+  "Educational Institutions",
+  "Online Learning Platforms",
+  "Educational Materials",
+  "Education Department Partnerships",
+  "Parents and Communities",
+  "Nonprofit Organizations",
+];
+
+const AboutPage = () => (
+  <>
+    <Breadcrumb title="About Us" currentPage="About Us" />
+
+    <section id="about-intro" className="section-py relative overflow-hidden bg-[#FEEFE5]">
+      <div className="container-base flex flex-col lg:flex-row items-center gap-14">
+        <div className="w-full lg:w-1/2" data-aos="fade-right">
+          <span className="sub-title mb-4">
+            <img src={subtitleImg} alt="" className="w-9 h-9" aria-hidden="true" />
+            About Us
+          </span>
+
+          <h2 className="font-display mb-5 text-[clamp(2rem,5vw,3.25rem)] leading-[1.15] font-extrabold text-heading-1">
+            Discover Our Mission for
+            <br />
+            EduKids Academy
+          </h2>
+
+          <p className="text-lg text-body mb-8">
+            Welcome to EduKids, where education meets inspiration, and every child's journey
+            is a story of growth and discovery.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 lg:mb-14">
+            {HIGHLIGHTS.map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <Icon icon="material-symbols:check-rounded" width="24" className="text-primary-2 shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <Button to="/courses" text="Explore Programs" />
+        </div>
+
+        <div className="w-full lg:w-1/2 relative" data-aos="fade-left">
+          <img src={about} alt="Teacher reading with a group of children" className="w-full h-full object-cover rounded-2xl" />
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src={shape} alt="" aria-hidden="true" className="absolute w-24 animate-spin-slow" />
+            <button type="button" aria-label="Play introduction video" className="relative z-10 cursor-pointer transition-transform duration-300 hover:scale-110">
+              <img src={play} alt="" className="w-8" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div className="relative w-full">
+      <AboutSection />
+      <img src={element1} alt="" aria-hidden="true" className="absolute top-14 left-14 animate-float pointer-events-none hidden lg:block" />
+      <img src={element2} alt="" aria-hidden="true" className="absolute top-14 right-14 animate-slide pointer-events-none hidden lg:block" />
+      <img src={element3} alt="" aria-hidden="true" className="absolute bottom-14 left-14 animate-rotate pointer-events-none hidden lg:block" />
+    </div>
+
+    <Team />
+    <Gallery />
+  </>
+);
+
+export default AboutPage;
+
+
+================================================================
+FILE: src/pages/blog/Blog.jsx
+================================================================
+import { useMemo, useState } from "react";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import BlogCard from "@components/cards/BlogCard";
+import { blogs } from "@data/blogs";
+import { staggerDelay } from "@utils/helpers";
+
+const VIEW_OPTIONS = [
+  { value: "grid", icon: "mdi:view-grid-outline" },
+  { value: "list", icon: "mdi:view-list" },
+];
+
+const Blog = () => {
+  const [view, setView] = useState("grid");
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const categories = useMemo(() => ["All", ...new Set(blogs.map((b) => b.category))], []);
+
+  const filteredBlogs =
+    activeCategory === "All" ? blogs : blogs.filter((b) => b.category === activeCategory);
+
+  return (
+    <>
+      <Breadcrumb title="Blog & News" currentPage="Blog" />
+
+      <section id="blog" className="section-py relative">
+        <div className="container-base">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 mb-10">
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-heading-1 transition-colors duration-300 cursor-pointer ${
+                    activeCategory === category ? "bg-primary text-heading-1" : "bg-white hover:bg-gray-100"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 border-card rounded-full p-1.5 shrink-0">
+              {VIEW_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setView(option.value)}
+                  aria-label={`${option.value} view`}
+                  aria-pressed={view === option.value}
+                  className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer ${
+                    view === option.value ? "bg-primary text-heading-1" : "text-body hover:bg-gray-100"
+                  }`}
+                >
+                  <Icon icon={option.icon} width={22} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {filteredBlogs.length === 0 ? (
+            <p className="text-center text-body py-20">No posts found in this category yet.</p>
+          ) : (
+            <div
+              className={
+                view === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
+                  : "flex flex-col gap-8"
+              }
+            >
+              {filteredBlogs.map((blog, index) => (
+                <div key={blog.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 100)}>
+                  <BlogCard blog={blog} view={view} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Blog;
+
+
+================================================================
+FILE: src/pages/blog/BlogDetails.jsx
+================================================================
+import { useParams, Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import { blogs } from "@data/blogs";
+
+const BlogDetails = () => {
+  const { id } = useParams();
+  const blog = blogs.find((item) => item.id === Number(id));
+
+  if (!blog) {
+    return (
+      <div className="container-base py-24 text-center">
+        <h2 className="text-4xl font-bold font-display mb-4">Post Not Found</h2>
+        <Link to="/blog" className="text-primary-2 font-semibold hover:underline">
+          ← Back to Blog
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Breadcrumb title={blog.title} parentTitle="Blog" parentLink="/blog" currentPage="Details" />
+
+      <section id="blog-details" className="section-py">
+        <div className="container-base max-w-4xl mx-auto">
+          <div className="flex items-center gap-6 mb-6 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <Icon icon="solar:user-linear" />
+              <span>
+                {blog.author} · {blog.authorRole}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icon icon="solar:calendar-linear" />
+              <span>{blog.date}</span>
+            </div>
+          </div>
+
+          <img src={blog.image} alt={blog.title} className="w-full h-96 object-cover rounded-2xl mb-10" />
+
+          <div className="space-y-6 text-gray-700 leading-8">
+            {blog.content.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+
+          {blog.quote && (
+            <blockquote className="my-10 border-l-4 border-primary bg-bg/40 rounded-r-xl px-8 py-6 italic text-xl text-heading-1 font-display">
+              “{blog.quote}”
+              {blog.quoteAuthor && (
+                <footer className="mt-3 text-base font-sans not-italic text-gray-500">— {blog.quoteAuthor}</footer>
+              )}
+            </blockquote>
+          )}
+
+          {blog.sectionTitle && (
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold mb-4 font-display">{blog.sectionTitle}</h3>
+              <p className="text-gray-700 leading-8 mb-6">{blog.sectionContent}</p>
+
+              {blog.highlights && (
+                <ul className="space-y-3">
+                  {blog.highlights.map((highlight) => (
+                    <li key={highlight} className="flex items-center gap-3">
+                      <Icon icon="mdi:check-circle" className="text-primary-2 text-2xl shrink-0" />
+                      <span className="text-gray-700">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+
+          {blog.tags && (
+            <div className="flex flex-wrap items-center gap-2 mt-10 pt-8 border-t border-gray-200">
+              <span className="font-semibold text-heading-1 mr-2">Tags:</span>
+              {blog.tags.map((tag) => (
+                <span key={tag} className="bg-gray-100 px-4 py-1.5 rounded-full text-sm text-gray-600">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default BlogDetails;
+
+
+================================================================
+FILE: src/pages/contact/Contact.jsx
+================================================================
+import { useState } from "react";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import FormField from "@components/common/FormField";
+import { contactCards, workingHours, socialLinks } from "@data/contact";
+
+const INITIAL_FORM = { name: "", email: "", phone: "", subject: "", message: "" };
+
+const Contact = () => {
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: wire this up to your backend / email service of choice.
+    setSubmitted(true);
+    setFormData(INITIAL_FORM);
+    setTimeout(() => setSubmitted(false), 5000);
+  };
+
+  return (
+    <>
+      <Breadcrumb title="Contact Us" currentPage="Contact" />
+
+      {/* Info Cards */}
+      <section className="section-py pb-0">
+        <div className="container-base">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {contactCards.map((card) => (
+              <div
+                key={card.label}
+                className="group bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-7 flex gap-5 items-start hover:-translate-y-1.5 transition-all duration-300 border border-transparent hover:border-primary/20"
+              >
+                <div className={`${card.iconBg} text-heading-1 w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-2xl`}>
+                  <Icon icon={card.icon} />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-body font-semibold mb-1.5">{card.label}</p>
+                  <p className="font-bold text-heading-1 text-base leading-snug mb-0.5">{card.primary}</p>
+                  <p className="text-body text-sm">{card.secondary}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Form + Sidebar */}
+      <section className="section-py">
+        <div className="container-base">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
+            <div className="lg:col-span-8">
+              <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-8 md:p-10">
+                <div className="mb-8">
+                  <span className="inline-block text-xs font-extrabold uppercase tracking-widest text-primary-2 bg-primary-2/10 px-4 py-2 rounded-full">
+                    Get in Touch
+                  </span>
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-heading-1 mt-4 mb-2 font-display">
+                    Send Us a Message
+                  </h2>
+                  <p className="text-body text-sm leading-relaxed">
+                    Fill out the form below and we'll get back to you as soon as possible.
+                  </p>
+                </div>
+
+                {submitted && (
+                  <div className="flex items-center gap-3 bg-primary-5/10 border border-primary-5/25 text-primary-5 rounded-2xl px-5 py-4 mb-6">
+                    <Icon icon="solar:check-circle-bold" className="text-2xl shrink-0" />
+                    <div>
+                      <p className="font-bold text-sm">Message sent successfully!</p>
+                      <p className="text-xs opacity-80">We'll get back to you within 24 hours.</p>
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <FormField
+                      label="Full Name"
+                      icon="solar:user-linear"
+                      name="name"
+                      placeholder="Your full name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <FormField
+                      label="Email Address"
+                      icon="solar:letter-linear"
+                      type="email"
+                      name="email"
+                      placeholder="your@email.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <FormField
+                      label="Phone Number"
+                      icon="solar:phone-linear"
+                      name="phone"
+                      placeholder="+1 (000) 000 0000"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                    <FormField
+                      label="Subject"
+                      icon="solar:chat-dots-linear"
+                      name="subject"
+                      placeholder="What is this about?"
+                      value={formData.subject}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-heading-1 uppercase tracking-wide">
+                      Your Message <span className="text-primary-7">*</span>
+                    </label>
+                    <textarea
+                      name="message"
+                      rows={6}
+                      placeholder="Write your message here..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      className="w-full p-5 border border-gray-200 rounded-2xl bg-body-bg text-heading-1 placeholder:text-body/50 text-sm outline-none focus:border-primary-2 transition-colors resize-none"
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4 pt-1">
+                    <button
+                      type="submit"
+                      className="bg-primary hover:bg-heading-1 text-heading-1 hover:text-white font-bold px-10 py-4 rounded-full transition-all duration-300 inline-flex items-center gap-2.5 cursor-pointer"
+                    >
+                      Send Message
+                      <Icon icon="solar:arrow-right-linear" className="text-lg" />
+                    </button>
+                    <p className="text-body text-xs">
+                      Response within <span className="font-bold text-heading-1">24 hours</span>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <aside className="lg:col-span-4 space-y-6">
+              <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-7">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-heading-1 shrink-0">
+                    <Icon icon="solar:clock-circle-bold" className="text-xl" />
+                  </div>
+                  <h4 className="font-bold text-heading-1 font-display">Working Hours</h4>
+                </div>
+
+                <ul className="space-y-0.5">
+                  {workingHours.map((row) => (
+                    <li key={row.day} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-none">
+                      <span className="text-sm text-body">{row.day}</span>
+                      <span className={`text-sm font-bold ${row.closed ? "text-primary-7" : "text-heading-1"}`}>
+                        {row.hours}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-7">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-heading-1 shrink-0">
+                    <Icon icon="solar:share-bold" className="text-xl" />
+                  </div>
+                  <h4 className="font-bold text-heading-1 font-display">Follow Us</h4>
+                </div>
+
+                <div className="grid grid-cols-5 gap-2">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.icon}
+                      href="#"
+                      title={social.label}
+                      aria-label={social.label}
+                      className={`h-11 rounded-xl bg-body-bg text-body ${social.hoverBg} hover:text-white transition-all flex items-center justify-center text-xl border border-gray-200 hover:border-transparent`}
+                    >
+                      <Icon icon={social.icon} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative bg-heading-1 rounded-3xl p-7 overflow-hidden">
+                <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-primary/20 pointer-events-none" />
+                <div className="absolute -bottom-5 -left-5 w-24 h-24 rounded-full bg-primary/10 pointer-events-none" />
+
+                <Icon icon="solar:question-circle-bold" className="text-primary text-4xl mb-4 relative" />
+                <h4 className="font-extrabold text-white text-lg mb-2 relative font-display">Have a Question?</h4>
+                <p className="text-white/60 text-sm leading-6 mb-5 relative">
+                  Reach out any time — our team typically responds within one business day.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div className="container-base pb-16 md:pb-24">
+        <div className="rounded-3xl overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.10)]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3026.0937912088407!2d-73.99363492404754!3d40.69278367139466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a476dd10f9f%3A0xa1cb17b5c697fe10!2s55%20Clark%20St%2C%20Brooklyn%2C%20NY%2011201%2C%20USA!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+            width="100%"
+            height="420"
+            style={{ border: 0, display: "block" }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="EduKids Location — 55 Clark St, Brooklyn NY"
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Contact;
+
+
+================================================================
+FILE: src/pages/courses/Course.jsx
+================================================================
+import { useState } from "react";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import CourseCard from "@components/cards/CourseCard";
+import { courses } from "@data/courses";
+import { staggerDelay } from "@utils/helpers";
+
+const VIEW_OPTIONS = [
+  { value: "grid", icon: "mdi:view-grid-outline" },
+  { value: "list", icon: "mdi:view-list" },
+];
+
+const Course = () => {
+  const [view, setView] = useState("grid");
+
+  return (
+    <>
+      <Breadcrumb title="Courses" currentPage="Courses" />
+
+      <section id="course" className="section-py relative">
+        <div className="container-base">
+          <div className="flex items-center justify-between mb-10">
+            <p className="text-body">
+              Showing all <strong className="text-heading-1">{courses.length}</strong> courses
+            </p>
+
+            <div className="flex items-center gap-2 border-card rounded-full p-1.5">
+              {VIEW_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setView(option.value)}
+                  aria-label={`${option.value} view`}
+                  aria-pressed={view === option.value}
+                  className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer ${
+                    view === option.value ? "bg-primary text-heading-1" : "text-body hover:bg-gray-100"
+                  }`}
+                >
+                  <Icon icon={option.icon} width={22} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className={
+              view === "grid"
+                ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
+                : "flex flex-col gap-8"
+            }
+          >
+            {courses.map((course, index) => (
+              <div key={course.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 100)}>
+                <CourseCard {...course} view={view} className={course.className} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Course;
+
+
+================================================================
+FILE: src/pages/courses/CourseDetails.jsx
+================================================================
+import { useParams, Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import Button from "@components/ui/Button";
+import Accordion from "@components/common/Accordion";
+import { courses } from "@data/courses";
+
+const STAT_ICONS = {
+  level: "mdi:stairs-up",
+  students: "mdi:account-group-outline",
+  lectures: "mdi:play-box-outline",
+  duration: "mdi:clock-outline",
+};
+
+const CourseDetails = () => {
+  const { id } = useParams();
+  const course = courses.find((item) => item.id === Number(id));
+
+  if (!course) {
+    return (
+      <div className="container-base py-24 text-center">
+        <h2 className="text-4xl font-bold font-display mb-4">Course Not Found</h2>
+        <Link to="/courses" className="text-primary-2 font-semibold hover:underline">
+          ← Back to Courses
+        </Link>
+      </div>
+    );
+  }
+
+  const stats = [
+    { key: "level", label: "Level", value: course.level },
+    { key: "students", label: "Students", value: course.students },
+    { key: "lectures", label: "Lectures", value: course.lectures },
+    { key: "duration", label: "Duration", value: course.duration },
+  ];
+
+  const accordionItems = course.curriculum.map((module) => ({
+    title: module.title,
+    content: (
+      <ul className="space-y-3">
+        {module.lessons.map((lesson) => (
+          <li key={lesson} className="flex items-center gap-3 text-gray-600">
+            <Icon icon="mdi:play-circle-outline" className="text-primary-2 text-xl shrink-0" />
+            {lesson}
+          </li>
+        ))}
+      </ul>
+    ),
+  }));
+
+  return (
+    <>
+      <Breadcrumb title={course.title} parentTitle="Courses" parentLink="/courses" currentPage="Details" />
+
+      <section id="course-details" className="section-py">
+        <div className="container-base grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <img src={course.courseImage} alt={course.title} className="w-full h-96 object-cover rounded-2xl mb-8" />
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+              {stats.map((stat) => (
+                <div key={stat.key} className="border border-gray-200 rounded-xl p-4 text-center">
+                  <Icon icon={STAT_ICONS[stat.key]} className="text-3xl text-primary-2 mx-auto mb-2" />
+                  <p className="font-bold font-display">{stat.value}</p>
+                  <span className="text-sm text-gray-500">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="text-3xl font-bold mb-5 font-display">About This Course</h2>
+            <p className="text-gray-600 leading-8 mb-10">{course.description}</p>
+
+            <h3 className="text-2xl font-bold mb-6 font-display">Curriculum</h3>
+            <Accordion items={accordionItems} />
+          </div>
+
+          <aside className="lg:col-span-5">
+            <div className="border-card rounded-2xl p-8 sticky top-28">
+              <div className="flex items-center gap-4 mb-6">
+                <img src={course.authorImage} alt={course.instructor} className="w-14 h-14 rounded-full object-cover" />
+                <div>
+                  <p className="font-semibold">{course.instructor}</p>
+                  <span className="text-sm text-gray-500">Instructor</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mb-6">
+                <h4 className="text-4xl font-extrabold text-primary-2 font-display">{course.price}</h4>
+                <div className="flex items-center gap-1 text-sm font-medium">
+                  <Icon icon="mingcute:star-fill" className="text-primary text-lg" />
+                  {course.rating} ({course.reviews} reviews)
+                </div>
+              </div>
+
+              <ul className="space-y-3 mb-8 border-t border-gray-200 pt-6">
+                <li className="flex items-center gap-3 text-gray-600">
+                  <Icon icon="mdi:account-outline" className="text-xl text-primary-2 shrink-0" />
+                  Ages {course.age}
+                </li>
+                <li className="flex items-center gap-3 text-gray-600">
+                  <Icon icon="mdi:certificate-outline" className="text-xl text-primary-2 shrink-0" />
+                  {course.certificate ? "Certificate of completion" : "No certificate"}
+                </li>
+              </ul>
+
+              <Button text="Enroll Now" className="w-full" icon="solar:arrow-right-linear" />
+            </div>
+          </aside>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default CourseDetails;
+
+
+================================================================
+FILE: src/pages/event/Event.jsx
+================================================================
+import Breadcrumb from "@components/ui/Breadcrumb";
+import EventCard from "@components/cards/EventCard";
+import { events } from "@data/events";
+import { staggerDelay } from "@utils/helpers";
+
+import eventElement from "@assets/event-element.png";
+import eventBlink from "@assets/event-blink.svg";
+
+const Event = () => (
+  <>
+    <Breadcrumb title="Events" currentPage="Events" />
+
+    <section id="events" className="section-py relative">
+      <div className="container-base">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {events.map((event, index) => (
+            <div key={event.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 100)}>
+              <EventCard {...event} element={eventElement} blink={eventBlink} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+);
+
+export default Event;
+
+
+================================================================
+FILE: src/pages/event/EventDetails.jsx
+================================================================
+import { useParams, Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import Button from "@components/ui/Button";
+import DetailRow from "@components/common/DetailRow";
+import { events } from "@data/events";
+
+import icon1 from "@assets/event-icon1.svg";
+import icon2 from "@assets/event-icon2.svg";
+import icon3 from "@assets/event-icon3.svg";
+import eventDetailImg from "@assets/event-kids.jpg";
+
+const EventDetails = () => {
+  const { id } = useParams();
+  const event = events.find((item) => item.id === Number(id));
+
+  if (!event) {
+    return (
+      <div className="container-base py-24 text-center">
+        <h2 className="text-4xl font-bold font-display mb-4">Event Not Found</h2>
+        <Link to="/event" className="text-primary-2 font-semibold hover:underline">
+          ← Back to Events
+        </Link>
+      </div>
+    );
+  }
+
+  const remainingSlots = Number(event.slot) - Number(event.bookedSlot);
+
+  return (
+    <>
+      <Breadcrumb title={event.title} parentTitle="Events" parentLink="/event" currentPage={event.title} />
+
+      <section id="event-details" className="section-py">
+        <div className="container-base grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <img src={eventDetailImg} alt={event.title} className="w-full h-100 object-cover rounded-2xl mb-8" />
+
+            <h2 className="text-3xl font-bold mb-5 font-display">{event.title}</h2>
+            <p className="text-gray-600 leading-8 mb-6">
+              Join us for {event.title.toLowerCase()}, a wonderful chance for students to come together,
+              celebrate their progress, and build lasting memories with friends, teachers, and family.
+            </p>
+            <p className="text-gray-600 leading-8">
+              Doors open thirty minutes before the start time. We recommend arriving early to find
+              seating and enjoy a few classroom activity stations set up in the lobby.
+            </p>
+          </div>
+
+          <aside className="lg:col-span-5">
+            <div className="border-card rounded-2xl p-8 sticky top-28">
+              <h3 className="text-2xl font-bold mb-6 font-display">Event Details</h3>
+
+              <ul>
+                <DetailRow icon={icon1} label="Date" value={`${event.day} ${event.month}, ${event.year}`} />
+                <DetailRow icon={icon2} label="Time" value={event.time} />
+                <DetailRow icon={icon3} label="Location" value={event.location} />
+              </ul>
+
+              <div className="mt-8">
+                <div className="flex justify-between mb-2 text-sm font-medium">
+                  <span>
+                    {event.bookedSlot} / {event.slot} Seats Booked
+                  </span>
+                  <span>{event.percentage}</span>
+                </div>
+                <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-3 bg-primary rounded-full transition-all duration-700"
+                    style={{ width: event.percentage.replace("%", "") + "%" }}
+                  />
+                </div>
+                <p className="text-sm text-gray-500 mt-2">{remainingSlots} seats remaining</p>
+              </div>
+
+              <div className="mt-8">
+                <Button text="Reserve Your Seat" className="w-full" icon="solar:arrow-right-linear" />
+              </div>
+
+              <div className="flex items-center gap-3 mt-6 pt-6 border-t border-gray-200">
+                <Icon icon="mdi:share-variant-outline" className="text-xl text-gray-500" />
+                <span className="text-sm text-gray-500">Share this event with other parents</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default EventDetails;
+
+
+================================================================
+FILE: src/pages/home/Home.jsx
+================================================================
+import Hero from "./sections/Hero";
+import About from "./sections/About";
+import Classes from "./sections/Classes";
+import Courses from "./sections/Courses";
+import Category from "./sections/Category";
+import PopularClasses from "./sections/PopularClasses";
+import Team from "./sections/Team";
+import Event from "./sections/Event";
+import Testimonials from "./sections/Testimonials";
+import Blog from "./sections/Blog";
+import Gallery from "./sections/Gallery";
+
+const Home = () => (
+  <>
+    <Hero />
+    <About />
+    <Classes />
+    <Courses />
+    <Category />
+    <PopularClasses />
+    <Team />
+    <Event />
+    <Gallery />
+    <Testimonials />
+    <Blog />
+  </>
+);
+
+export default Home;
+
+
+================================================================
+FILE: src/pages/home/sections/About.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import Button from "@components/ui/Button";
+import about from "@assets/about.png";
+import subtitleImg from "@assets/title-img.svg";
+
+const MISSION_ITEMS = [
+  {
+    icon: "oui:bullseye",
+    iconBg: "bg-[#EEEBFF]",
+    iconColor: "text-primary-2",
+    title: "Our Mission",
+    copy: "At EduKids our mission is to cultivate an environment where curiosity is sparked, creativity flourishes, and every child develops a lifelong love of learning.",
+  },
+  {
+    icon: "mdi:heart-outline",
+    iconBg: "bg-[#FFF3E8]",
+    iconColor: "text-primary-3",
+    title: "Our Commitment",
+    copy: "As we embark on the journey of education together, we remain committed to providing a safe, nurturing, and engaging learning experience for every student.",
+  },
+];
+
+const About = () => (
+  <section id="about" className="section-py relative overflow-hidden">
+    <div className="container-base flex flex-col lg:flex-row items-center gap-14">
+      <div className="w-full lg:w-1/2" data-aos="fade-right">
+        <img src={about} alt="Children engaged in classroom activities" className="w-full h-full object-cover rounded-2xl" />
+      </div>
+
+      <div className="w-full lg:w-1/2" data-aos="fade-left">
+        <span className="sub-title mb-4">
+          <img src={subtitleImg} alt="" className="w-9 h-9" aria-hidden="true" />
+          About Us
+        </span>
+
+        <h2 className="font-display mb-5 text-[clamp(2rem,5vw,3.25rem)] leading-[1.15] font-extrabold text-heading-1">
+          Discover Our Mission for
+          <br />
+          EduKids Academy
+        </h2>
+
+        <p className="text-lg text-body mb-10 lg:mb-14">
+          Welcome to EduKids, where education meets inspiration, and every child's journey
+          is a story of growth and discovery.
+        </p>
+
+        <div className="grid gap-6 mb-10 lg:mb-14">
+          {MISSION_ITEMS.map((item) => (
+            <div key={item.title} className="flex gap-5 items-start">
+              <div className={`w-16 h-16 shrink-0 rounded-2xl ${item.iconBg} flex items-center justify-center`}>
+                <Icon icon={item.icon} className={item.iconColor} width="34" />
+              </div>
+              <div>
+                <h6 className="font-bold text-xl text-heading-1 mb-2 font-display">{item.title}</h6>
+                <p className="text-body leading-7">{item.copy}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Button to="/about" text="About More" />
+      </div>
+    </div>
+  </section>
+);
+
+export default About;
+
+
+================================================================
+FILE: src/pages/home/sections/Blog.jsx
+================================================================
+import SectionHeading from "@components/ui/SectionHeading";
+import BlogCard from "@components/cards/BlogCard";
+import { blogs } from "@data/blogs";
+import { staggerDelay } from "@utils/helpers";
+
+const Blog = () => (
+  <section id="blog" className="section-py relative">
+    <div className="container-base">
+      <SectionHeading
+        eyebrow="Blog & News"
+        title="Welcome to EduKids Blog"
+        description="A quick directory of EduKids' most popular posts on parenting, homeschooling, curriculum, and supplementing your kids' learning."
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12">
+        {blogs.slice(0, 3).map((blog, index) => (
+          <div key={blog.id} data-aos="zoom-in-up" data-aos-delay={staggerDelay(index, 200)}>
+            <BlogCard blog={blog} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default Blog;
+
+
+================================================================
+FILE: src/pages/home/sections/Category.jsx
+================================================================
+import { useRef } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import SectionHeading from "@components/ui/SectionHeading";
+import SliderArrows from "@components/ui/SliderArrows";
+import { staggerDelay } from "@utils/helpers";
+
+import category1 from "@assets/ctg-01.svg";
+import category2 from "@assets/ctg-02.svg";
+import category3 from "@assets/ctg-03.svg";
+import category4 from "@assets/ctg-04.svg";
+import category5 from "@assets/ctg-05.svg";
+
+const CATEGORIES = [
+  { img: category1, title: "Languages", color: "bg-primary-2" },
+  { img: category2, title: "Coding", color: "bg-primary-4" },
+  { img: category3, title: "Math", color: "bg-primary-5" },
+  { img: category4, title: "Music", color: "bg-primary-6" },
+  { img: category5, title: "Writing", color: "bg-primary-3" },
+  { img: category2, title: "Coding", color: "bg-primary-4" },
+  { img: category3, title: "Math", color: "bg-primary-5" },
+  { img: category4, title: "Music", color: "bg-primary-6" },
+];
+
+const SPLIDE_OPTIONS = {
+  perPage: 6,
+  perMove: 1,
+  rewind: true,
+  autoplay: true,
+  interval: 3000,
+  pagination: false,
+  arrows: false,
+  breakpoints: {
+    1280: { perPage: 4 },
+    1024: { perPage: 3 },
+    768: { perPage: 2 },
+    640: { perPage: 1 },
+  },
+};
+
+const Category = () => {
+  const splideRef = useRef(null);
+
+  return (
+    <section id="category" className="section-py pb-0 relative">
+      <div className="container-base">
+        <SectionHeading eyebrow="Category" title="Popular Class Topics" description="Marked by significant growth and exploration as toddlers transition from infancy." />
+
+        <div className="relative mt-12" data-aos="fade-up">
+          <SliderArrows getSplide={() => splideRef.current?.splide} className="contents" />
+
+          <Splide ref={splideRef} options={SPLIDE_OPTIONS} aria-label="Class categories">
+            {CATEGORIES.map((item, index) => (
+              <SplideSlide key={index}>
+                <div
+                  className="group flex flex-col items-center gap-5 py-4"
+                  data-aos="zoom-in-up"
+                  data-aos-delay={staggerDelay(index)}
+                >
+                  <div
+                    className={`${item.color} w-40 h-40 md:w-50 md:h-50 rounded-full p-6 md:p-8 border-card transition-all duration-500 group-hover:-translate-y-3`}
+                  >
+                    <img src={item.img} alt={item.title} className="w-full h-full object-contain" />
+                  </div>
+                  <div
+                    className={`${item.color} px-6 py-3 rounded-full border-card text-white font-bold transition-all duration-300 group-hover:bg-transparent group-hover:text-heading-1`}
+                  >
+                    {item.title}
+                  </div>
+                </div>
+              </SplideSlide>
+            ))}
+          </Splide>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Category;
+
+
+================================================================
+FILE: src/pages/home/sections/Classes.jsx
+================================================================
+import SectionHeading from "@components/ui/SectionHeading";
+import ProgramCard from "@components/cards/ProgramCard";
+import { staggerDelay } from "@utils/helpers";
+
+const PROGRAMS = [
+  {
+    title: "Toddler",
+    age: "(1 - 3 Years)",
+    description: "A toddler is a child typically between the ages of 1 and 3 years old.",
+    icon: "material-symbols-light:child-hat-outline",
+    bgColor: "bg-primary-2",
+  },
+  {
+    title: "Preschool",
+    age: "(2 - 4 Years)",
+    description: "Preschool programs help children develop social, emotional, and learning skills.",
+    icon: "mdi:school",
+    bgColor: "bg-primary-3",
+  },
+  {
+    title: "Kindergarten",
+    age: "(4 - 5 Years)",
+    description: "Kindergarten prepares children for formal schooling through fun activities.",
+    icon: "mdi:book-open-page-variant",
+    bgColor: "bg-primary-4",
+  },
+  {
+    title: "Pre-K Program",
+    age: "(5 - 6 Years)",
+    description: "Pre-K programs focus on early literacy, creativity, and school readiness.",
+    icon: "mdi:human-male-board",
+    bgColor: "bg-primary-5",
+  },
+];
+
+const Classes = () => (
+  <section id="classes" className="section-py relative">
+    <div className="container-base">
+      <SectionHeading
+        eyebrow="Classes"
+        title="Find Classes For Every Age"
+        description="Marked by significant growth and exploration as toddlers transition from infancy."
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 mt-12">
+        {PROGRAMS.map((program, index) => (
+          <div key={program.title} data-aos="fade-up" data-aos-delay={staggerDelay(index, 150)}>
+            <ProgramCard {...program} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default Classes;
+
+
+================================================================
+FILE: src/pages/home/sections/Courses.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import SectionHeading from "@components/ui/SectionHeading";
+import { staggerDelay } from "@utils/helpers";
+
+import cloudElement from "@assets/banner-bg-2.png";
+import courseImg1 from "@assets/course-image-01.jpg";
+import courseImg2 from "@assets/course-image-02.jpg";
+import courseImg3 from "@assets/course-image-03.jpg";
+
+const FEATURED_COURSES = [
+  {
+    image: courseImg1,
+    bgColor: "bg-primary-2",
+    tag: "Preschool Program",
+    title: "Early Explorers (Ages 3-5)",
+    description:
+      "An introduction to colors, shapes, creativity, and basic artistic expressions through fun activities and interactive learning.",
+    highlights: ["ABC Adventure", "Little Scientists"],
+  },
+  {
+    image: courseImg2,
+    bgColor: "bg-primary-5",
+    tag: "Elementary Program",
+    title: "Primary School (Ages 6-11)",
+    description:
+      "Encouraging curiosity and creativity through engaging educational activities, mathematics, science, and teamwork.",
+    highlights: ["Math Mania", "Science Safari"],
+  },
+  {
+    image: courseImg3,
+    bgColor: "bg-primary-3",
+    tag: "Advanced Program",
+    title: "Middle School (Ages 12-14)",
+    description:
+      "Building future-ready skills through coding, robotics, innovation, problem-solving, and collaborative projects.",
+    highlights: ["Coding", "Robotics"],
+  },
+];
+
+const FeaturedCourseCard = ({ course }) => (
+  <div className={`group ${course.bgColor} rounded-3xl overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-3`}>
+    <div className="overflow-hidden">
+      <img
+        src={course.image}
+        alt={course.title}
+        className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+    </div>
+
+    <div className="p-8 text-white flex flex-col h-full">
+      <span className="text-sm uppercase tracking-wider text-primary mb-2">{course.tag}</span>
+      <h4 className="text-2xl font-bold mb-4 font-display">{course.title}</h4>
+      <p className="text-gray-200 mb-6 leading-relaxed">{course.description}</p>
+
+      <ul className="space-y-3">
+        {course.highlights.map((highlight) => (
+          <li key={highlight} className="flex items-center gap-3">
+            <Icon icon="mdi:check-circle" className="text-primary text-2xl shrink-0" />
+            {highlight}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+
+const Courses = () => (
+  <section id="course" className="section-py-lg relative bg-bg">
+    <div className="container-base">
+      <SectionHeading
+        eyebrow="Courses"
+        title="Kids Courses at EduKids"
+        description="Discover the exciting and enriching courses tailored for young minds at EduKids."
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12">
+        {FEATURED_COURSES.map((course, index) => (
+          <div key={course.title} data-aos="fade-up" data-aos-delay={staggerDelay(index, 200)}>
+            <FeaturedCourseCard course={course} />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <img
+      src={cloudElement}
+      alt=""
+      aria-hidden="true"
+      className="absolute top-0 left-0 right-0 w-full z-10 h-auto object-cover pointer-events-none"
+    />
+  </section>
+);
+
+export default Courses;
+
+
+================================================================
+FILE: src/pages/home/sections/Event.jsx
+================================================================
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import SectionHeading from "@components/ui/SectionHeading";
+import EventCard from "@components/cards/EventCard";
+import { events } from "@data/events";
+import { staggerDelay } from "@utils/helpers";
+
+import eventElement from "@assets/event-element.png";
+import eventBlink from "@assets/event-blink.svg";
+import brand1 from "@assets/brand-01.svg";
+import brand2 from "@assets/brand-02.svg";
+import brand3 from "@assets/brand-03.svg";
+import brand4 from "@assets/brand-04.svg";
+import brand5 from "@assets/brand-05.svg";
+
+const BRANDS = [brand1, brand2, brand3, brand4, brand5];
+
+const BRAND_SPLIDE_OPTIONS = {
+  type: "loop",
+  perPage: 6,
+  perMove: 1,
+  gap: "2rem",
+  autoplay: true,
+  interval: 2000,
+  pauseOnHover: false,
+  pauseOnFocus: false,
+  arrows: false,
+  pagination: false,
+  breakpoints: {
+    1024: { perPage: 4 },
+    768: { perPage: 3 },
+    640: { perPage: 2 },
+  },
+};
+
+const Event = () => (
+  <section id="events" className="section-py relative">
+    <div className="container-base">
+      <SectionHeading
+        eyebrow="Event"
+        title="Upcoming Events"
+        description="We are thrilled to announce our upcoming event, Explorer's Day — a celebration of knowledge."
+      />
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-12">
+        {events.slice(0, 4).map((event, index) => (
+          <div key={event.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 150)}>
+            <EventCard {...event} element={eventElement} blink={eventBlink} />
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-14" data-aos="fade-up">
+        <Splide options={BRAND_SPLIDE_OPTIONS} aria-label="Partner brands">
+          {BRANDS.map((brand, index) => (
+            <SplideSlide key={index}>
+              <div className="flex items-center justify-center h-24">
+                <img src={brand} alt={`Partner brand ${index + 1}`} className="max-h-20 w-auto object-contain opacity-70 transition-opacity hover:opacity-100" />
+              </div>
+            </SplideSlide>
+          ))}
+        </Splide>
+      </div>
+    </div>
+  </section>
+);
+
+export default Event;
+
+
+================================================================
+FILE: src/pages/home/sections/Gallery.jsx
+================================================================
+import SectionHeading from "@components/ui/SectionHeading";
+import { staggerDelay } from "@utils/helpers";
+
+import gallery1 from "@assets/gallery-01.jpg";
+import gallery2 from "@assets/gallery-02.jpg";
+import gallery3 from "@assets/gallery-03.jpg";
+import gallery4 from "@assets/gallery-04.jpg";
+import gallery5 from "@assets/gallery-05.jpg";
+import gallery6 from "@assets/gallery-06.jpg";
+
+const GALLERY_IMAGES = [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6];
+
+const Gallery = () => (
+  <section id="gallery" className="section-py relative">
+    <div className="container-base">
+      <SectionHeading eyebrow="Gallery" title="Tiny Scholars Showcase" description="Marked by significant growth and exploration as toddlers transition from infancy." />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-12">
+        {GALLERY_IMAGES.map((image, index) => (
+          <div
+            key={index}
+            data-aos="zoom-in"
+            data-aos-delay={staggerDelay(index, 100)}
+            className="w-full h-90 overflow-hidden border-card rounded-2xl"
+          >
+            <img
+              src={image}
+              alt={`EduKids classroom moment ${index + 1}`}
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default Gallery;
+
+
+================================================================
+FILE: src/pages/home/sections/Hero.jsx
+================================================================
+import { Icon } from "@iconify/react";
+import Button from "@components/ui/Button";
+import { useGSAP } from "@hooks/useGSAP";
+import { animateHeroEntrance } from "@animations/heroAnimations";
+
+import hero from "@assets/hero-img.png";
+import cloudElement from "@assets/banner-bg-1.png";
+import bgGrid from "@assets/bg-grid.png";
+
+import element1 from "@assets/element-01.svg";
+import element2 from "@assets/element-02.svg";
+import element3 from "@assets/element-03.svg";
+import element4 from "@assets/element-04.svg";
+import element5 from "@assets/element-05.svg";  
+import element7 from "@assets/element-07.svg";
+
+const FLOATERS = [
+  { src: element1, className: "top-28 left-5 animate-float" },
+  { src: element2, className: "bottom-65 left-5 animate-slide" },
+  { src: element3, className: "bottom-75 left-160 animate-rotate" },
+  { src: element4, className: "top-40 left-240 animate-zoom" },
+  { src: element5, className: "bottom-60 left-200 animate-bounce-soft" },
+  { src: element7, className: "top-40 right-20 animate-swing" },
+];
+
+const Hero = () => {
+  const containerRef = useGSAP(({ container }) => {
+    animateHeroEntrance(container);
+  });
+
+  return (
+    <section
+      ref={containerRef}
+      id="hero"
+      className="relative h-screen overflow-hidden"
+      style={{
+        backgroundImage: `
+      linear-gradient(to bottom, var(--color-primary-2), var(--color-primary-10)),
+      url(${bgGrid})
+    `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="container-base relative z-10 flex flex-col lg:flex-row justify-between items-start h-full">
+        <div className="hero-content w-full lg:w-1/2 text-white h-full flex justify-center items-start flex-col">
+          <span className="hero-eyebrow sub-title text-white/90! mb-4">
+            <Icon icon="solar:star-bold" className="text-primary" width={22} />
+            Where Curiosity Meets Joy
+          </span>
+
+          <h1 className="hero-heading font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.15] font-extrabold mb-5">
+            Discover the Magic of Learning at
+            <span className="text-primary"> EduKids</span>
+          </h1>
+
+          <p className="hero-copy text-lg text-white/85 mb-10 lg:mb-14 max-w-md">
+            Welcome to EduKids, where each day brings new opportunities for
+            discovery and growth. Our vibrant community is dedicated to every
+            child's journey.
+          </p>
+
+          <div className="hero-actions flex items-center gap-5">
+            <Button to="/about" text="Explore Now" />
+
+            <button
+              type="button"
+              className="flex items-center gap-3 group cursor-pointer"
+            >
+              <span className="bg-primary rounded-full p-3 w-12 h-12 flex items-center justify-center border-2 border-heading-1 transition-transform duration-300 group-hover:scale-110">
+                <Icon
+                  icon="solar:play-bold"
+                  width={18}
+                  className="text-heading-1"
+                />
+              </span>
+              <span className="text-lg font-medium">Watch Video</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="hero-image w-full lg:w-1/2 absolute right-0 top-40 hidden lg:flex h-200">
+          <img
+            src={hero}
+            alt="A joyful child learning"
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
+
+      <img
+        src={cloudElement}
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 right-0 w-full z-10 h-50 object-cover pointer-events-none"
+      />
+
+      {FLOATERS.map((floater, index) => (
+        <img
+          key={index}
+          src={floater.src}
+          alt=""
+          aria-hidden="true"
+          className={`absolute hidden md:block pointer-events-none ${floater.className}`}
+        />
+      ))}
+    </section>
+  );
+};
+
+export default Hero;
+
+
+================================================================
+FILE: src/pages/home/sections/PopularClasses.jsx
+================================================================
+import { useRef } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import SectionHeading from "@components/ui/SectionHeading";
+import SliderArrows from "@components/ui/SliderArrows";
+import CourseCard from "@components/cards/CourseCard";
+import { courses } from "@data/courses";
+import { staggerDelay } from "@utils/helpers";
+
+const SPLIDE_OPTIONS = {
+  type: "loop",
+  perPage: 3,
+  perMove: 1,
+  gap: "1.5rem",
+  pagination: false,
+  arrows: false,
+  autoplay: true,
+  interval: 3000,
+  pauseOnHover: true,
+  breakpoints: {
+    1280: { perPage: 3 },
+    1024: { perPage: 2 },
+    768: { perPage: 2 },
+    640: { perPage: 1 },
+  },
+};
+
+const PopularClasses = () => {
+  const splideRef = useRef(null);
+
+  return (
+    <section id="popular-classes" className="section-py relative">
+      <div className="container-base">
+        <SectionHeading
+          eyebrow="Classes"
+          title="Popular Classes"
+          description="Marked by significant growth and exploration as toddlers transition from infancy."
+        />
+
+        <div className="relative mt-12" data-aos="fade-up">
+          <SliderArrows getSplide={() => splideRef.current?.splide} className="contents" />
+
+          <Splide ref={splideRef} options={SPLIDE_OPTIONS} aria-label="Popular classes">
+            {courses.map((course, index) => (
+              <SplideSlide key={course.id}>
+                <div data-aos="zoom-in-up" data-aos-delay={staggerDelay(index + 1)}>
+                  <CourseCard {...course} />
+                </div>
+              </SplideSlide>
+            ))}
+          </Splide>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PopularClasses;
+
+
+================================================================
+FILE: src/pages/home/sections/Team.jsx
+================================================================
+import SectionHeading from "@components/ui/SectionHeading";
+import TeacherCard from "@components/cards/TeacherCard";
+import { teachers } from "@data/teachers";
+import { staggerDelay } from "@utils/helpers";
+
+import cloudElement from "@assets/banner-bg-2.png";
+
+const Team = () => (
+  <section id="teacher" className="section-py-lg relative bg-bg">
+    <div className="container-base">
+      <SectionHeading
+        eyebrow="Teacher"
+        title="Our Expert Teachers"
+        description="We take pride in our team of dedicated experts who play a pivotal role in shaping every child's journey."
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        {teachers.slice(0, 3).map((teacher, index) => (
+          <div key={teacher.id} data-aos="zoom-in-up" data-aos-delay={staggerDelay(index, 200)}>
+            <TeacherCard {...teacher} />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <img
+      src={cloudElement}
+      alt=""
+      aria-hidden="true"
+      className="absolute top-0 left-0 right-0 w-full z-10 h-auto object-cover pointer-events-none"
+    />
+  </section>
+);
+
+export default Team;
+
+
+================================================================
+FILE: src/pages/home/sections/Testimonials.jsx
+================================================================
+import { useRef } from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import { Icon } from "@iconify/react";
+import SectionHeading from "@components/ui/SectionHeading";
+import SliderArrows from "@components/ui/SliderArrows";
+import { testimonials } from "@data/testimonials";
+
+import cloudElement from "@assets/banner-bg-2.png";
+import element1 from "@assets/tst-element1.svg";
+import element2 from "@assets/tst-element2.svg";
+import element3 from "@assets/tst-element3.svg";
+
+const SPLIDE_OPTIONS = {
+  type: "loop",
+  perPage: 1,
+  perMove: 1,
+  gap: "1rem",
+  arrows: false,
+  pagination: true,
+  autoplay: true,
+  interval: 4000,
+  pauseOnHover: true,
+};
+
+const Testimonials = () => {
+  const splideRef = useRef(null);
+
+  return (
+    <section id="testimonials" className="section-py-lg relative bg-bg">
+      <div className="container-base">
+        <SectionHeading
+          eyebrow="Testimonials"
+          title="What Parents Say About Us"
+          description="The success and happiness of our students are at the heart of everything we do. But don't just take our word for it."
+        />
+      </div>
+
+      <div className="relative max-w-225 mx-auto mt-12" data-aos="fade-up">
+        <SliderArrows
+          getSplide={() => splideRef.current?.splide}
+          className="hidden lg:contents [&_button]:-left-7 [&_button:last-child]:-right-7"
+        />
+
+        <Splide ref={splideRef} options={SPLIDE_OPTIONS} aria-label="Parent testimonials">
+          {testimonials.map((item) => (
+            <SplideSlide key={item.name}>
+              <div className="px-2 lg:px-16 relative">
+                <div className="max-w-200 rounded-2xl mx-auto bg-primary-2 px-10 h-auto py-8 lg:h-90 flex justify-center items-center flex-col text-center text-white relative border-card">
+                  <h4 className="font-bold text-2xl font-display">{item.name}</h4>
+                  <span className="text-gray-300 font-display">{item.role}</span>
+
+                  <p className="text-xl py-5 font-medium font-display pb-10">{item.review}</p>
+
+                  <div className="flex items-center gap-2 justify-center">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Icon key={i} icon="mingcute:star-fill" className="text-primary text-2xl" />
+                    ))}
+                  </div>
+
+                  <img src={element1} alt="" aria-hidden="true" className="hidden lg:absolute top-12 left-18 pointer-events-none" />
+                  <img src={element2} alt="" aria-hidden="true" className="hidden lg:absolute bottom-12 left-40 pointer-events-none" />
+                  <img src={element3} alt="" aria-hidden="true" className="hidden lg:absolute top-12 right-40 pointer-events-none" />
+                </div>
+              </div>
+            </SplideSlide>
+          ))}
+        </Splide>
+      </div>
+
+      <img
+        src={cloudElement}
+        alt=""
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 w-full z-10 h-auto object-cover pointer-events-none"
+      />
+    </section>
+  );
+};
+
+export default Testimonials;
+
+
+================================================================
+FILE: src/pages/pricing/Pricing.jsx
+================================================================
+import Breadcrumb from "@components/ui/Breadcrumb";
+import SectionHeading from "@components/ui/SectionHeading";
+import PricingCard from "@components/cards/PricingCard";
+import { pricingPlans } from "@data/pricing";
+import { staggerDelay } from "@utils/helpers";
+
+const Pricing = () => (
+  <>
+    <Breadcrumb title="Pricing Plans" currentPage="Pricing" />
+
+    <section id="pricing" className="section-py relative">
+      <div className="container-base">
+        <SectionHeading
+          eyebrow="Pricing"
+          title="Choose Your Plan"
+          description="Simple, transparent pricing for every family — pick the plan that fits your child's learning journey."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-30">
+          {pricingPlans.map((plan, index) => (
+            <div key={plan.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 150)}>
+              <PricingCard {...plan} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+);
+
+export default Pricing;
+
+
+================================================================
+FILE: src/pages/team/Team.jsx
+================================================================
+import Breadcrumb from "@components/ui/Breadcrumb";
+import TeacherCard from "@components/cards/TeacherCard";
+import { teachers } from "@data/teachers";
+import { staggerDelay } from "@utils/helpers";
+
+const Team = () => (
+  <>
+    <Breadcrumb title="Our Team" currentPage="Team" />
+
+    <section id="team" className="section-py relative">
+      <div className="container-base">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {teachers.map((teacher, index) => (
+            <div key={teacher.id} data-aos="fade-up" data-aos-delay={staggerDelay(index, 100)}>
+              <TeacherCard {...teacher} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+);
+
+export default Team;
+
+
+================================================================
+FILE: src/pages/team/TeamDetails.jsx
+================================================================
+import { useParams, Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Breadcrumb from "@components/ui/Breadcrumb";
+import SkillBar from "@components/common/SkillBar";
+import InfoBox from "@components/common/InfoBox";
+import { teachers } from "@data/teachers";
+
+const SOCIALS = [
+  { key: "facebook", icon: "mdi:facebook", hoverBg: "hover:bg-facebook" },
+  { key: "instagram", icon: "mdi:instagram", hoverBg: "hover:bg-instagram" },
+  { key: "linkedin", icon: "mdi:linkedin", hoverBg: "hover:bg-linkedin" },
+  { key: "youtube", icon: "mdi:youtube", hoverBg: "hover:bg-youtube" },
+];
+
+const TEACHING_SKILLS = [
+  { label: "Classroom Engagement", percent: 95 },
+  { label: "Curriculum Planning", percent: 88 },
+  { label: "Parent Communication", percent: 80 },
+];
+
+const TeamDetails = () => {
+  const { id } = useParams();
+  const teacher = teachers.find((item) => item.id === Number(id));
+
+  if (!teacher) {
+    return (
+      <div className="container-base py-24 text-center">
+        <h2 className="text-4xl font-bold font-display mb-4">Teacher Not Found</h2>
+        <Link to="/team" className="text-primary-2 font-semibold hover:underline">
+          ← Back to Team
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Breadcrumb title={teacher.name} parentTitle="Team" parentLink="/team" currentPage={teacher.name} />
+
+      <section id="team-details" className="section-py">
+        <div className="container-base">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Sidebar */}
+            <aside className="lg:col-span-4">
+              <div className="border border-gray-200 rounded-2xl overflow-hidden sticky top-28">
+                <img src={teacher.image} alt={teacher.name} className="w-full h-120 object-cover" />
+
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-1 font-display">{teacher.name}</h3>
+                  <span className="text-primary-3 font-medium">{teacher.designation}</span>
+
+                  <ul className="space-y-3 border-t border-gray-200 pt-5 mt-5 text-sm">
+                    <li>
+                      <strong className="text-heading-1">Email:</strong>
+                      <br />
+                      {teacher.email}
+                    </li>
+                    <li>
+                      <strong className="text-heading-1">Phone:</strong>
+                      <br />
+                      {teacher.phone}
+                    </li>
+                  </ul>
+
+                  <div className="flex gap-3 mt-6">
+                    {SOCIALS.filter((s) => teacher[s.key]).map((s) => (
+                      <a
+                        key={s.key}
+                        href={teacher[s.key]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`group w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-heading-1 hover:text-white transition-all duration-300 hover:-translate-y-2 ${s.hoverBg}`}
+                      >
+                        <Icon icon={s.icon} className="text-xl" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            {/* Main content */}
+            <main className="lg:col-span-8">
+              <div className="mb-10">
+                <h2 className="text-3xl font-bold mb-5 font-display">Personal Info</h2>
+                <p className="text-gray-600 leading-8">{teacher.bio}</p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-6 mb-10">
+                <InfoBox title="Specialty">{teacher.subject}</InfoBox>
+                <InfoBox title="Experience">6 Years at EduKids</InfoBox>
+                <InfoBox title="Education">B.A. in Early Childhood Education</InfoBox>
+              </div>
+
+              <div className="mb-10">
+                <h3 className="text-3xl font-bold mb-6 font-display">Teaching Skills</h3>
+                <div className="space-y-6">
+                  {TEACHING_SKILLS.map((skill) => (
+                    <SkillBar key={skill.label} {...skill} />
+                  ))}
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default TeamDetails;
+
+
+================================================================
+FILE: src/utils/helpers.js
+================================================================
+/**
+ * Generates a staggered animation delay in ms for list items.
+ * Replaces the repeated `index * 150` pattern found across sections.
+ *
+ * @param {number} index - item index in a list
+ * @param {number} step - ms delay between each item (default 100)
+ * @param {number} max - cap the delay so long lists don't feel sluggish
+ */
+export const staggerDelay = (index, step = 100, max = 600) =>
+  Math.min(index * step, max);
+
+/**
+ * Truncates a string to a max length, appending an ellipsis if needed.
+ * @param {string} text
+ * @param {number} maxLength
+ */
+export const truncate = (text = "", maxLength = 120) =>
+  text.length > maxLength ? `${text.slice(0, maxLength).trim()}…` : text;
+
+/**
+ * Clamp helper for numeric values (used in scroll/tilt calculations).
+ */
+export const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+
+================================================================
+FILE: vite.config.js
+================================================================
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import { fileURLToPath, URL } from 'url'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+      '@data': fileURLToPath(new URL('./src/data', import.meta.url)),
+      '@hooks': fileURLToPath(new URL('./src/hooks', import.meta.url)),
+      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+      '@animations': fileURLToPath(new URL('./src/animations', import.meta.url)),
+    },
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5500,
+  },
+})
+

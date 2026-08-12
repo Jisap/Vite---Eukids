@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --color-primary: #ffd335;
+  --color-primary-2: #7763e5;
+  --color-primary-3: #ff6d1c;
+  --color-primary-4: #b54cca;
+  --color-primary-5: #09a24f;
+  --color-primary-6: #c29663;
+  --color-primary-7: #ff4e41;
+  --color-primary-8: #20ad96;
+  --color-primary-9: #a89222;
+  --color-primary-10: #36348e;
+
+  /* Neutrals & semantic */
+  --color-secondary: #1f1f25;
+  --color-body: #737477;
+  --color-body-bg: #f9f8ff;
+  --color-bg: #ffd9ef;
+  --color-heading: #262626;
+  --color-white: #ffffff;
+
+  /* Social */
+  --color-facebook: #3b5997;
+  --color-twitter: #1ba1f2;
+  --color-youtube: #ed4141;
+  --color-linkedin: #0077b5;
+  --color-instagram: #c231a1;
+
+  /* Typography */
+  --font-display: "Nunito", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+
+  /* Borders */
+  --border-card: 2px 2px 5px 2px solid #262626;
+}
+
+/* Tailwind v4 theme tokens */
+@theme {
+  --color-primary: #ffd335;
+  --color-primary-2: #7763e5;
+  --color-primary-3: #ff6d1c;
+  --color-primary-4: #b54cca;
+  --color-primary-5: #09a24f;
+  --color-primary-6: #c29663;
+  --color-primary-7: #ff4e41;
+  --color-primary-8: #20ad96;
+  --color-primary-9: #a89222;
+  --color-primary-10: #36348e;
+  --color-secondary: #1f1f25;
+  --color-body: #737477;
+  --color-body-2: #f9f8ff;
+  --color-bg: #ffd9ef;
+  --color-heading-1: #262626;
+  --color-white: #ffffff;
+  --color-facebook: #3b5997;
+  --color-twitter: #1ba1f2;
+  --color-youtube: #ed4141;
+  --color-linkedin: #0077b5;
+  --color-instagram: #c231a1;
+}
+
+/* ─────────────────────────────────────────────
+   GLOBAL RESET & BASE
+───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-heading);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-transform: capitalize;
+  line-height: 1.2;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────
+   UTILITY CLASSES
+───────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Section spacing */
+.section-py {
+  padding-top: clamp(3rem, 6vw, 6rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.section-py-lg {
+  padding-top: clamp(4rem, 10vw, 10rem);
+  padding-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+/* Responsive container */
+.container-base {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Card border style */
+.border-card {
+  border-width: 2px 2px 5px 2px;
+  border-style: solid;
+  border-color: var(--color-heading);
+}
+
+/* Sub-title badge */
+.sub-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-primary-2);
+}
+
+/* ─────────────────────────────────────────────
+   BUTTON  (shared .btn-primary)
+───────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  border-width: 2px 4px 4px 2px;
+  border-style: solid;
+  border-color: var(--color-heading);
+  background: var(--color-primary);
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 211, 53, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────
+   KEYFRAME ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes slide-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+.animate-slide {
+  animation: slide-x 5s ease-in-out infinite;
+}
+
+@keyframes rotate-float {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(8deg) translateY(-10px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+.animate-rotate {
+  animation: rotate-float 6s ease-in-out infinite;
+}
+
+@keyframes zoom-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.animate-zoom {
+  animation: zoom-pulse 4s ease-in-out infinite;
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-bounce-soft {
+  animation: bounce-soft 3s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+.animate-swing {
+  animation: swing 4s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* ─────────────────────────────────────────────
+   AOS CUSTOM EASING
+───────────────────────────────────────────── */
+[data-aos] {
+  pointer-events: none;
+}
+[data-aos].aos-animate {
+  pointer-events: auto;
+}
