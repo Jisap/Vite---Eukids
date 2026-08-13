@@ -44,3 +44,19 @@ export const attachButtonPress = (el) => {
     el.removeEventListener("pointerleave", handleUp);
   };
 };
+
+/**
+ * Staggered reveal for a list of card elements — used as a GSAP alternative
+ * to AOS when a section needs finer timeline control (e.g. Hero stat cards).
+ * Este código hace una sola cosa: hace que un grupo de tarjetas aparezcan una tras otra desde abajo con un efecto cascada.
+ *
+ * @param {HTMLElement[]|NodeList} cards
+ */
+export const staggerCardsIn = (cards) =>
+  gsap.from(cards, {
+    opacity: 0,               // Todas las tarjetas parten de opacidad 0 
+    y: 40,                    // y 40px más abajo de su posición final.
+    duration: 0.6,            // Cada tarjeta tarda 0.6s en llegar a su estado visible y en posición.
+    stagger: 0.12,            // Cada tarjeta comienza su animación 0.12s después de la anterior
+    ease: "power3.out",
+  });

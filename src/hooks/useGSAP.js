@@ -1,3 +1,6 @@
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
+
 /**
  * Runs a GSAP animation callback scoped to a container ref, with
  * automatic context cleanup on unmount (prevents animation leaks
