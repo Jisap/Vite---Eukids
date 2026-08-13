@@ -25,7 +25,7 @@ const FLOATERS = [
 
 const Hero = () => {
 
-  const containerRef = useGSAP(({ container }) => {
+  const containerRef = useGSAP(({ container }) => { // la useGSAP busca dentro de la ref la clase y aplica la animacion concreta 
     animateHeroEntrance(container);
   }, []);
 
@@ -44,6 +44,8 @@ const Hero = () => {
       }}
     >
       <div className="container-base relative z-10 flex flex-col lg:flex-row justify-between items-start h-full">
+
+        {/* Parte izquierda de la pantalla, el texto */}
         <div className="hero-content w-full lg:w-1/2 text-white h-full flex justify-center items-start flex-col">
           <span className="hero-eyebrow sub-title text-white/90! mb-4">
             <Icon icon="solar:star-bold" className="text-primary" width={22} />
@@ -82,7 +84,33 @@ const Hero = () => {
             </button>
           </div>
         </div>
+
+        {/* Parte derecha de la pantalla, la imagen */}
+        <div className="hero-image w-full lg:w-1/2 absolute right-0 top-40 hidden lg:flex h-200">
+          <img
+            src={hero}
+            alt="A joyful child learning"
+            className="w-full h-full object-contain"
+          />
+        </div>
       </div>
+
+      <img
+        src={cloudElement}
+        alt=""
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 right-0 w-full z-10 h-50 object-cover pointer-events-none"
+      />
+
+      {FLOATERS.map((floater, index) => (
+        <img
+          key={index}
+          src={floater.src}
+          alt=""
+          aria-hidden="true"
+          className={`absolute hidden md:block pointer-events-none ${floater.className}`}
+        />
+      ))}
     </section>
   )
 }
