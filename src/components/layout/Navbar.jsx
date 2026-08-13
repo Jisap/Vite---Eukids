@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Logo from './Logo'
 import gsap from 'gsap';
 import Menu from './Menu';
+import Button from '../ui/Button';
+import { Icon } from '@iconify/react';
 
 
 
@@ -37,7 +39,7 @@ const Navbar = () => {
 
 
 
-  // Shrink + add shadow once the page has scrolled a little.
+  // Controla la aparicion del header al hacer scroll
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 20) {
@@ -49,6 +51,9 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Función para cerrar el menú hamburguesa
+  const closeMobileMenu = () => setMenuOpen(false);
 
   return (
     <>
@@ -68,9 +73,51 @@ const Navbar = () => {
             </div>
 
             <div className='hidden lg:block shrink-0'>
-              {/* Create Button Component */}
+              <Button
+                text="Admission Now"
+                to="/about"
+              />
             </div>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label={menuOpen ? "Close Menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className='lg:hidden text-3xl text-heading-1 cursor-pointer '
+            >
+              <Icon icon={
+                menuOpen
+                  ? "material-symbols:close-rounded"
+                  : "material-symbols:menu-rounded"
+              } />
+            </button>
           </nav>
+
+          {/* Mobile slide */}
+          <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out
+            ${menuOpen
+              ? "max-h-175 opacity-100 mt-2"
+              : "max-h-0 opacity-0"
+            }
+            `}
+          >
+            <div className='bg-white rounded-3xl p-6 shadow-lg border-card'>
+              <Menu
+                mobile
+                onNavigate={closeMobileMenu}
+              />
+
+              <div>
+                <Button
+                  to="/about"
+                  text="Admission Now"
+                  className='w-full'
+                  onClick={closeMobileMenu}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </header>
     </>

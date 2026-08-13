@@ -28,8 +28,8 @@ const Button = ({
 
   const classes = `
       inline-flex items-center justify-center gap-2 rounded-full font-display font-bold leading-none whitespace-nowrap
-      cursor-pointer select-none border-2 border-b-4 boder-r-4 transition-all duration-300 ease-out hover:-translate-y-0.5 
-      hover:shadow-[4px_6px_opx_rgba(38,38,38,1)]active:translate-y-0 active:shadow-none
+      cursor-pointer select-none border-2 border-b-4 border-r-4 transition-all duration-300 ease-out hover:-translate-y-0.5 
+      hover:shadow-[4px_6px_0px_rgba(38,38,38,1)] active:translate-y-0 active:shadow-none
       ${VARIANTS[variant]} ${SIZES[size]} ${className}
     `.trim();
 
