@@ -66,7 +66,7 @@ const Navbar = () => {
           >
 
 
-            <Logo className="w-32 lg:40 shrink-0" />
+            <Logo className="w-32 lg:w-40 shrink-0" />
 
             <div className='hidden lg:block'>
               <Menu />
