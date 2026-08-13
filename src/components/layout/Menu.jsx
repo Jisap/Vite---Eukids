@@ -10,6 +10,7 @@ const DropdownList = ({ items, onNavigate, mobile }) => (
     mobile
       ? "pl-4 border-l border-gray-200 mt-2 space-y-0.5"
       : "absolute left-0 top-full min-w-62.5 bg-white shadow-xl rounded-2xl py-3 z-50 opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
+    // Por defecto el dropdown esta oculto en desktop: opacity-0 e invisible. Cuando se hace hover esto se revierte
   }
   >
     {items.map((item) => (
