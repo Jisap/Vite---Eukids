@@ -19,6 +19,7 @@ const CourseCard = ({
   price,
   view,
 }) => {
+
   const isList = view === "list";
 
   return (

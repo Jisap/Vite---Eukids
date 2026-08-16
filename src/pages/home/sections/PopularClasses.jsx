@@ -29,7 +29,6 @@ const PopularClasses = () => {
 
   const splideRef = useRef(null);
 
-
   return (
     <>
       <section id="popular-classes" className="section-py relative">
