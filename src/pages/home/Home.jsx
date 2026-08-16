@@ -4,6 +4,7 @@ import About from './sections/About'
 import Classes from './sections/Classes'
 import Courses from './sections/Courses'
 import Category from './sections/Category'
+import PopularClasses from './sections/PopularClasses'
 
 function Home() {
   return (

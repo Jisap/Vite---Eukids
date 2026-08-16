@@ -28,7 +28,12 @@ const SectionHeading = ({
     >
       {eyebrow && (
         <span className="sub-title mb-4">
-          <img src={subtitleImg} alt="" className="w-9 h-9" aria-hidden="true" />
+          <img
+            src={subtitleImg}
+            alt=""
+            className="w-9 h-9"
+            aria-hidden="true"
+          />
           {eyebrow}
         </span>
       )}
