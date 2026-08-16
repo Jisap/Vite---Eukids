@@ -25,6 +25,7 @@ const About = () => {
     <>
       <section id="about" className="section-py relative overflow-hidden">
         <div className="container-base flex flex-col lg:flex-row items-center gap-14">
+          {/* Imagen de la izquierda */}
           <div className="w-full lg:w-1/2" data-aos="fade-right">
             <img
               src={about}
@@ -33,6 +34,7 @@ const About = () => {
             />
           </div>
 
+          {/* Contenido de la derecha */}
           <div className="w-full lg:w-1/2" data-aos="fade-left">
             <span className="sub-title mb-4">
               <img
