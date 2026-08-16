@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Navbar2 from './components/layout/Navbar2';
 import Home from './pages/home/Home';
 import About from './pages/home/sections/About';
 
 const App = () => {
+
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 80,
+    });
+  }, []);
 
   return (
     <>

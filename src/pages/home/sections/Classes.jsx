@@ -47,7 +47,11 @@ const Classes = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 mt-12">
               {PROGRAMS.map((program, index) => (
-                <div key={program.title} data-aos="fade-up" data-aos-delay={staggerDelay(index, 150)}>
+                <div
+                  key={program.title}
+                  data-aos="fade-up"
+                  data-aos-delay={staggerDelay(index, 150)}
+                >
                   <ProgramCard {...program} />
                 </div>
               ))}
