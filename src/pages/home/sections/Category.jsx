@@ -52,7 +52,7 @@ const Category = () => {
 
         <div className="relative mt-12" data-aos="fade-up">
           <SliderArrows
-            getSplide={() => splideRef.current?.splide}
+            getSplide={() => splideRef.current?.splide} // Pasa a SliderArrows la referencia del slider
             className="contents"
           />
 
@@ -69,7 +69,10 @@ const Category = () => {
                   data-aos-delay={staggerDelay(index)}
                 >
                   <div
-                    className={`${item.color} w-40 h-40 md:w-50 md:h-50 rounded-full p-6 md:p-8 border-card transition-all duration-500 group-hover:-translate-y-3`}
+                    className={`
+                      ${item.color} 
+                      w-40 h-40 md:w-50 md:h-50 rounded-full p-6 md:p-8 border-card transition-all duration-500 group-hover:-translate-y-3
+                    `}
                   >
                     <img
                       src={item.img}
@@ -79,7 +82,10 @@ const Category = () => {
                   </div>
 
                   <div
-                    className={`${item.color} px-6 py-3 rounded-full border-card text-white font-bold transition-all duration-300 group-hover:bg-transparent group-hover:text-heading-1`}
+                    className={`
+                      ${item.color} 
+                      px-6 py-3 rounded-full border-card text-white font-bold transition-all duration-300 group-hover:bg-transparent group-hover:text-heading-1
+                    `}
                   >
                     {item.title}
                   </div>
