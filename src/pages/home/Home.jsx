@@ -13,6 +13,7 @@ function Home() {
       <Classes />
       <Courses />
       <Category />
+      <PopularClasses />
     </>
   )
 }
