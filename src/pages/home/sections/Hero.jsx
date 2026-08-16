@@ -95,6 +95,7 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* NUBE INFERIOR */}
       <img
         src={cloudElement}
         alt=""
