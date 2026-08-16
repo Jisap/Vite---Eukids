@@ -53,7 +53,10 @@ const PopularClasses = () => {
             >
               {courses.map((course, index) => (
                 <SplideSlide key={course.id}>
-                  <div data-aos="zoom-in-up" data-aos-delay={staggerDelay(index + 1)}>
+                  <div
+                    data-aos="zoom-in-up"
+                    data-aos-delay={staggerDelay(index + 1)}
+                  >
                     <CourseCard {...course} />
                   </div>
                 </SplideSlide>
