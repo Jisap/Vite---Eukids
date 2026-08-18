@@ -77,6 +77,7 @@ const CourseDetails = () => {
             <p className="text-gray-600 leading-8 mb-10">{course.description}</p>
 
             <h3 className="text-2xl font-bold mb-6 font-display">Curriculum</h3>
+            <Accordion items={accordionItems} />
           </div>
         </div>
       </section>
