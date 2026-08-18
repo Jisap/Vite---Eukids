@@ -28,6 +28,27 @@ const CourseDetails = () => {
     );
   }
 
+  const stats = [
+    { key: "level", label: "Level", value: course.level },
+    { key: "students", label: "Students", value: course.students },
+    { key: "lectures", label: "Lectures", value: course.lectures },
+    { key: "duration", label: "Duration", value: course.duration },
+  ];
+
+  const accordionItems = course.curriculum.map((module) => ({
+    title: module.title,
+    content: (
+      <ul className="space-y-3">
+        {module.lessons.map((lesson) => (
+          <li key={lesson} className="flex items-center gap-3 text-gray-600">
+            <Icon icon="mdi:play-circle-outline" className="text-primary-2 text-xl shrink-0" />
+            {lesson}
+          </li>
+        ))}
+      </ul>
+    ),
+  }));
+
   return (
     <>
 
