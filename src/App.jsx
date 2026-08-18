@@ -5,6 +5,8 @@ import 'aos/dist/aos.css';
 import Navbar2 from './components/layout/Navbar2';
 import Home from './pages/home/Home';
 import About from './pages/home/sections/About';
+import Course from './pages/courses/Course';
+import CourseDetails from './pages/courses/CourseDetails';
 
 const App = () => {
 
@@ -25,7 +27,8 @@ const App = () => {
         <main>
           <Routes>
             <Route path='/' element={<Home />} />
-
+            <Route path="/courses" element={<Course />} />
+            <Route path="/courses/:id" element={<CourseDetails />} />
           </Routes>
         </main>
       </BrowserRouter>
