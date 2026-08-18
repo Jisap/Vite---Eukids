@@ -79,6 +79,51 @@ const CourseDetails = () => {
             <h3 className="text-2xl font-bold mb-6 font-display">Curriculum</h3>
             <Accordion items={accordionItems} />
           </div>
+
+          <aside className="lg:col-span-5">
+            <div className="border-card rounded-2xl p-8 sticky top-28">
+              <div className="flex items-center gap-4 mb-6">
+                <img
+                  src={course.authorImage}
+                  alt={course.instructor}
+                  className="w-14 h-14 rounded-full object-cover"
+                />
+
+                <div>
+                  <p className="font-semibold">{course.instructor}</p>
+                  <span className="text-sm text-gray-500">Instructor</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mb-6">
+                <h4 className="text-4xl font-extrabold text-primary-2 font-display">{course.price}</h4>
+                <div className="flex items-center gap-1 text-sm font-medium">
+                  <Icon icon="mingcute:star-fill" className="text-primary text-lg" />
+                  {course.rating} ({course.reviews} reviews)
+                </div>
+              </div>
+
+              <ul className="space-y-3 mb-8 border-t border-gray-200 pt-6">
+                <li className="flex items-center gap-3 text-gray-600">
+                  <Icon icon="mdi:account-outline" className="text-xl text-primary-2 shrink-0" />
+                  Ages {course.age}
+                </li>
+                <li className="flex items-center gap-3 text-gray-600">
+                  <Icon
+                    icon="mdi:certificate-outline"
+                    className="text-xl text-primary-2 shrink-0"
+                  />
+                  {course.certificate ? "Certificate of completion" : "No certificate"}
+                </li>
+              </ul>
+
+              <Button
+                text="Enroll Now"
+                className="w-full"
+                icon="solar:arrow-right-linear"
+              />
+            </div>
+          </aside>
         </div>
       </section>
     </>

@@ -9,9 +9,10 @@ import breadcrumbBg from "@assets/breadcrumb-bg.jpg";
  * @param {string} [parentLink] - breadcrumb trail start path
  * @param {string} currentPage - breadcrumb trail end label
  */
+// src/components/ui/Breadcrumb.jsx
 const Breadcrumb = ({ title, parentTitle = "Home", parentLink = "/", currentPage }) => (
   <div
-    className="min-h-87.5 lg:min-h-112.5 w-full flex items-center bg-cover bg-center bg-no-repeat relative"
+    className="min-h-87.5 lg:min-h-112.5 w-full flex items-center pt-28 lg:pt-36 pb-12 bg-cover bg-center bg-no-repeat relative"
     style={{ backgroundImage: `url(${breadcrumbBg})` }}
   >
     <div className="absolute inset-0 bg-secondary/55" aria-hidden="true" />
@@ -36,5 +37,8 @@ const Breadcrumb = ({ title, parentTitle = "Home", parentLink = "/", currentPage
     </div>
   </div>
 );
+
+
+
 
 export default Breadcrumb;
