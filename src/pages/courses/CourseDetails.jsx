@@ -60,13 +60,21 @@ const CourseDetails = () => {
 
       <section id="course-details" className="section-py">
         <div className="container-base grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Left Side Content Area */}
           <div className="lg:col-span-7">
-            <img src={course.courseImage} alt={course.title} className="w-full h-96 object-cover rounded-2xl mb-8" />
+            <img
+              src={course.courseImage}
+              alt={course.title}
+              className="w-full h-96 object-cover rounded-2xl mb-8"
+            />
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
               {stats.map((stat) => (
                 <div key={stat.key} className="border border-gray-200 rounded-xl p-4 text-center">
-                  <Icon icon={STAT_ICONS[stat.key]} className="text-3xl text-primary-2 mx-auto mb-2" />
+                  <Icon
+                    icon={STAT_ICONS[stat.key]}
+                    className="text-3xl text-primary-2 mx-auto mb-2"
+                  />
                   <p className="font-bold font-display">{stat.value}</p>
                   <span className="text-sm text-gray-500">{stat.label}</span>
                 </div>
@@ -80,6 +88,7 @@ const CourseDetails = () => {
             <Accordion items={accordionItems} />
           </div>
 
+          {/* Right Side Sticky Sidebar */}
           <aside className="lg:col-span-5">
             <div className="border-card rounded-2xl p-8 sticky top-28">
               <div className="flex items-center gap-4 mb-6">
@@ -91,12 +100,16 @@ const CourseDetails = () => {
 
                 <div>
                   <p className="font-semibold">{course.instructor}</p>
+
                   <span className="text-sm text-gray-500">Instructor</span>
                 </div>
               </div>
 
               <div className="flex items-center justify-between mb-6">
-                <h4 className="text-4xl font-extrabold text-primary-2 font-display">{course.price}</h4>
+                <h4 className="text-4xl font-extrabold text-primary-2 font-display">
+                  {course.price}
+                </h4>
+
                 <div className="flex items-center gap-1 text-sm font-medium">
                   <Icon icon="mingcute:star-fill" className="text-primary text-lg" />
                   {course.rating} ({course.reviews} reviews)
@@ -108,6 +121,7 @@ const CourseDetails = () => {
                   <Icon icon="mdi:account-outline" className="text-xl text-primary-2 shrink-0" />
                   Ages {course.age}
                 </li>
+
                 <li className="flex items-center gap-3 text-gray-600">
                   <Icon
                     icon="mdi:certificate-outline"

@@ -8,6 +8,9 @@ import About from './pages/home/sections/About';
 import Course from './pages/courses/Course';
 import CourseDetails from './pages/courses/CourseDetails';
 import ScrollToTop from './components/common/ScrollToTop';
+import Team from './pages/team/Team';
+import TeamDetails from './pages/team/TeamDetails';
+
 
 const App = () => {
 
@@ -31,6 +34,8 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path="/courses" element={<Course />} />
             <Route path="/courses/:id" element={<CourseDetails />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/team/:id" element={<TeamDetails />} />
           </Routes>
         </main>
       </BrowserRouter>
