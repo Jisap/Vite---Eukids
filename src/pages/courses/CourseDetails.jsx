@@ -51,7 +51,35 @@ const CourseDetails = () => {
 
   return (
     <>
+      <Breadcrumb
+        title={course.title}
+        parentTitle="Courses"
+        parentLink="/courses"
+        currentPage="Details"
+      />
 
+      <section id="course-details" className="section-py">
+        <div className="container-base grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <img src={course.courseImage} alt={course.title} className="w-full h-96 object-cover rounded-2xl mb-8" />
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+              {stats.map((stat) => (
+                <div key={stat.key} className="border border-gray-200 rounded-xl p-4 text-center">
+                  <Icon icon={STAT_ICONS[stat.key]} className="text-3xl text-primary-2 mx-auto mb-2" />
+                  <p className="font-bold font-display">{stat.value}</p>
+                  <span className="text-sm text-gray-500">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="text-3xl font-bold mb-5 font-display">About This Course</h2>
+            <p className="text-gray-600 leading-8 mb-10">{course.description}</p>
+
+            <h3 className="text-2xl font-bold mb-6 font-display">Curriculum</h3>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

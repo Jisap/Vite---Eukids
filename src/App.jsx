@@ -7,6 +7,7 @@ import Home from './pages/home/Home';
 import About from './pages/home/sections/About';
 import Course from './pages/courses/Course';
 import CourseDetails from './pages/courses/CourseDetails';
+import ScrollToTop from './components/common/ScrollToTop';
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar2 />
 
         <main>

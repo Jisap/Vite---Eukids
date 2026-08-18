@@ -33,7 +33,8 @@ const Course = () => {
                   onClick={() => setView(option.value)}
                   aria-label={`${option.value} view`}
                   aria-pressed={view === option.value}
-                  className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer ${view === option.value
+                  className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer 
+                    ${view === option.value
                       ? "bg-primary text-heading-1"
                       : "text-body hover:bg-gray-100"
                     }`}
