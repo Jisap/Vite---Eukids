@@ -10,6 +10,8 @@ import CourseDetails from './pages/courses/CourseDetails';
 import ScrollToTop from './components/common/ScrollToTop';
 import Team from './pages/team/Team';
 import TeamDetails from './pages/team/TeamDetails';
+import Event from "@pages/event/Event";
+import EventDetails from "@pages/event/EventDetails";
 
 
 const App = () => {
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="/courses/:id" element={<CourseDetails />} />
             <Route path="/team" element={<Team />} />
             <Route path="/team/:id" element={<TeamDetails />} />
+            <Route path="/event" element={<Event />} />
+            <Route path="/event/:id" element={<EventDetails />} />
           </Routes>
         </main>
       </BrowserRouter>
