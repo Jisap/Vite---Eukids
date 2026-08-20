@@ -6,9 +6,11 @@ import Courses from './sections/Courses'
 import Category from './sections/Category'
 import PopularClasses from './sections/PopularClasses'
 
-import Event from '../event/Event'
+
 import Gallery from './sections/Gallery'
 import Team from './sections/Team'
+import Event from './sections/Event'
+import Testimonials from './sections/Testimonials'
 
 function Home() {
   return (
@@ -22,6 +24,7 @@ function Home() {
       <Team />
       <Event />
       <Gallery />
+      <Testimonials />
     </>
   )
 }
