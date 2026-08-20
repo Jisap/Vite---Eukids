@@ -12,6 +12,7 @@ import Team from './pages/team/Team';
 import TeamDetails from './pages/team/TeamDetails';
 import Event from "@pages/event/Event";
 import EventDetails from "@pages/event/EventDetails";
+import Gallery from './pages/home/sections/Gallery';
 
 
 const App = () => {

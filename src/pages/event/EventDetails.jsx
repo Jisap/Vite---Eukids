@@ -25,7 +25,7 @@ const EventDetails = () => {
     );
   }
 
-  const remainingSlots = Number(event.slot) - Number(event.bookedSlot);
+  const remainingSlots = Number(event.slot) - Number(event.bookedSlot); // Muestra los puestos disponibles
 
   return (
     <>
@@ -38,6 +38,7 @@ const EventDetails = () => {
 
       <section id="event-details" className="section-py">
         <div className="container-base grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Columna izquierda */}
           <div className="lg:col-span-7">
             <img
               src={eventDetailImg}
@@ -58,6 +59,7 @@ const EventDetails = () => {
             </p>
           </div>
 
+          {/* Columna derecha */}
           <aside className="lg:col-span-5">
             <div className="border-card rounded-2xl p-8 sticky top-28">
               <h3 className="text-2xl font-bold mb-6 font-display">Event Details</h3>
@@ -73,6 +75,7 @@ const EventDetails = () => {
                   <span>
                     {event.bookedSlot} / {event.slot} Seats Booked
                   </span>
+
                   <span>{event.percentage}</span>
                 </div>
                 <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
