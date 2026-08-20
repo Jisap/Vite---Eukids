@@ -11,6 +11,7 @@ import Gallery from './sections/Gallery'
 import Team from './sections/Team'
 import Event from './sections/Event'
 import Testimonials from './sections/Testimonials'
+import Blog from './sections/Blog'
 
 function Home() {
   return (
@@ -25,6 +26,7 @@ function Home() {
       <Event />
       <Gallery />
       <Testimonials />
+      <Blog />
     </>
   )
 }

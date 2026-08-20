@@ -12,7 +12,8 @@ import Team from './pages/team/Team';
 import TeamDetails from './pages/team/TeamDetails';
 import Event from "@pages/event/Event";
 import EventDetails from "@pages/event/EventDetails";
-import Gallery from './pages/home/sections/Gallery';
+import BlogDetails from './pages/blog/BlogDetails';
+import Blog from './pages/blog/Blog';
 
 
 const App = () => {
@@ -41,6 +42,8 @@ const App = () => {
             <Route path="/team/:id" element={<TeamDetails />} />
             <Route path="/event" element={<Event />} />
             <Route path="/event/:id" element={<EventDetails />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetails />} />
           </Routes>
         </main>
       </BrowserRouter>
