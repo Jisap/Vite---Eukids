@@ -12,7 +12,7 @@ const EventCard = ({ id, day, month, title, time, location, bgColor, textColor, 
     `}
   >
     <img
-      src={blink}
+      src={blink} // Estrellitas en la esquina superior izda
       alt=""
       aria-hidden="true"
       className="absolute top-4 right-4 w-8 h-8 md:w-12 md:h-12"
@@ -20,13 +20,14 @@ const EventCard = ({ id, day, month, title, time, location, bgColor, textColor, 
 
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 md:gap-6">
       <div className="relative flex items-center justify-center text-center w-32 h-32 sm:w-36 sm:h-36 shrink-0">
+        {/* div que se situa encima de la imagen de abajo */}
         <div className={`relative z-10 flex flex-col ${textColor}`}>
           <span className="text-4xl md:text-5xl font-bold font-display">{day}</span>
           <span className="text-lg md:text-xl">{month}</span>
         </div>
 
         <img
-          src={element}
+          src={element} //Imagen de fondo donde se situa la fecha y el mes
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-contain"
@@ -36,7 +37,7 @@ const EventCard = ({ id, day, month, title, time, location, bgColor, textColor, 
       <div className={`
         flex-1 text-center sm:text-left
         ${textColor} 
-        `}
+      `}
       >
         <Link to={`/event/${id}`}>
           <h3 className="text-xl md:text-2xl font-bold mb-4 font-display hover:underline">{title}</h3>
