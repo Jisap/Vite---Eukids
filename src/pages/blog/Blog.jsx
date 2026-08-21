@@ -29,6 +29,50 @@ const Blog = () => {
         title="Blog & News"
         currentPage="Blog"
       />
+
+      <section id="blog" className="section-py relative">
+        <div className="container-base">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 mb-10">
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  className={`
+                    px-5 py-2.5 rounded-full text-sm font-semibold border-2 border-heading-1 transition-colors duration-300 cursor-pointer 
+                    ${activeCategory === category
+                      ? "bg-primary text-heading-1"
+                      : "bg-white hover:bg-gray-100"
+                    }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 border-card rounded-full p-1.5 shrink-0">
+              {VIEW_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setView(option.value)}
+                  aria-label={`${option.value} view`}
+                  aria-pressed={view === option.value}
+                  className={`
+                    w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer 
+                    ${view === option.value
+                      ? "bg-primary text-heading-1"
+                      : "text-body hover:bg-gray-100"
+                    }`}
+                >
+                  <Icon icon={option.icon} width={22} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
