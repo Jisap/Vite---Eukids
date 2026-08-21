@@ -1,6 +1,43 @@
-import React, { useState } from 'react'
-import Logo from './Logo';
-import { Icon } from '@iconify/react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Logo from "./Logo";
+import blog1 from "@assets/blog-07.jpg";
+import blog2 from "@assets/blog-08.jpg";
+
+const ABOUT_LINKS = ["About Us", "Teachers", "Events", "Pricing"];
+const COURSE_LINKS = ["Courses", "Blog", "Programs", "Contact Us"];
+
+const RECENT_POSTS = [
+  { image: blog1, date: "October 29, 2026", title: "Avoid These 4 Common Mistakes When Managing Remote Teams" },
+  { image: blog2, date: "October 30, 2026", title: "How To Draw Realistic Lips In 7 Simple Steps" },
+];
+
+const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://www.facebook.com/" },
+  { label: "Twitter", href: "https://twitter.com/" },
+  { label: "Instagram", href: "https://www.instagram.com/" },
+];
+
+/** Small internal helper — avoids repeating the same <ul> markup twice. */
+const FooterLinkGroup = ({ title, links }) => (
+  <div>
+    <h4 className="text-xl font-semibold mb-6 relative inline-block font-display">
+      {title}
+      <span className="absolute left-0 -bottom-2 w-10 h-1 bg-primary rounded-full" />
+    </h4>
+
+    <ul className="space-y-4">
+      {links.map((item) => (
+        <li key={item}>
+          <a href="#" className="text-gray-600 hover:text-heading-1 transition-all duration-300 hover:translate-x-2 inline-block">
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
 const Footer = () => {
 
@@ -69,6 +106,20 @@ const Footer = () => {
                 +(61) 485-826-710
               </li>
             </ul>
+          </div>
+
+          <div data-aos="fade-up" data-aos-delay="150">
+            <FooterLinkGroup
+              title="About Us"
+              links={ABOUT_LINKS}
+            />
+          </div>
+
+          <div data-aos="fade-up" data-aos-delay="300">
+            <FooterLinkGroup
+              title="Our Courses"
+              links={COURSE_LINKS}
+            />
           </div>
         </div>
       </div>
