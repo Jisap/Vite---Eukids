@@ -121,6 +121,56 @@ const Footer = () => {
               links={COURSE_LINKS}
             />
           </div>
+
+          <div data-aos="fade-left">
+            <h4 className="text-xl font-semibold mb-6 relative inline-block font-display">
+              Recent Posts
+              <span className="absolute left-0 -bottom-2 w-10 h-1 bg-primary rounded-full" />
+            </h4>
+
+            <div className="space-y-5">
+              {RECENT_POSTS.map((post) => (
+                <div key={post.title} className="group flex gap-4 cursor-pointer">
+                  <div className="overflow-hidden rounded-xl w-20 h-20 shrink-0">
+                    <img
+                      src={post.image}
+                      alt=""
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-gray-500">{post.date}</p>
+
+                    <h6 className="font-medium leading-6 transition-colors duration-300 group-hover:text-primary-2">
+                      {post.title}
+                    </h6>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-gray-600 text-center md:text-left">
+            © {new Date().getFullYear()} EduKids. All Rights Reserved.
+          </p>
+
+          <div className="flex items-center gap-5">
+            {SOCIAL_LINKS.map((social) => (
+              <Link
+                key={social.label}
+                to={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-heading-1 transition duration-300 hover:-translate-y-1"
+              >
+                {social.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
