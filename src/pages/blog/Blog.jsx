@@ -71,6 +71,33 @@ const Blog = () => {
               ))}
             </div>
           </div>
+
+          {filteredBlogs.length === 0 ? (
+            <p className="text-center text-body py-20">
+              No posts found in this category yet.
+            </p>
+          ) : (
+            <div
+              className={
+                view === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
+                  : "flex flex-col gap-8"
+              }
+            >
+              {filteredBlogs.map((blog, index) => (
+                <div
+                  key={blog.id}
+                  data-aos="fade-up"
+                  data-aos-delay={staggerDelay(index, 100)}
+                >
+                  <BlogCard
+                    blog={blog}
+                    view={view}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>
