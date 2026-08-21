@@ -24,7 +24,12 @@ const Blog = () => {
       : blogs.filter((b) => b.category === activeCategory);
 
   return (
-    <div>Blog</div>
+    <>
+      <Breadcrumb
+        title="Blog & News"
+        currentPage="Blog"
+      />
+    </>
   )
 }
 
