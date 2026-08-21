@@ -15,6 +15,7 @@ import EventDetails from "@pages/event/EventDetails";
 import BlogDetails from './pages/blog/BlogDetails';
 import Blog from './pages/blog/Blog';
 import Footer from './components/layout/Footer';
+import Footer2 from './components/layout/Footer2';
 
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
             <Route path="/blog/:id" element={<BlogDetails />} />
           </Routes>
         </main>
-        <Footer />
+        <Footer2 />
       </BrowserRouter>
     </>
   )

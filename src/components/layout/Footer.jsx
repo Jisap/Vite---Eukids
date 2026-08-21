@@ -142,7 +142,7 @@ const Footer = () => {
                   <div>
                     <p className="text-sm text-gray-500">{post.date}</p>
 
-                    <h6 className="font-medium leading-6 transition-colors duration-300 group-hover:text-primary-2">
+                    <h6 className="font-medium leading-6 transition-colors duration-150 group-hover:text-primary-2">
                       {post.title}
                     </h6>
                   </div>
