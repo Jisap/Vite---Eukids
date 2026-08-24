@@ -4,7 +4,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar2 from './components/layout/Navbar2';
 import Home from './pages/home/Home';
-import About from './pages/home/sections/About';
 import Course from './pages/courses/Course';
 import CourseDetails from './pages/courses/CourseDetails';
 import ScrollToTop from './components/common/ScrollToTop';
@@ -16,6 +15,7 @@ import BlogDetails from './pages/blog/BlogDetails';
 import Blog from './pages/blog/Blog';
 import Footer from './components/layout/Footer';
 import Footer2 from './components/layout/Footer2';
+import About from './pages/about/About';
 
 
 const App = () => {
@@ -46,9 +46,10 @@ const App = () => {
             <Route path="/event/:id" element={<EventDetails />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetails />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
-        <Footer2 />
+        <Footer />
       </BrowserRouter>
     </>
   )

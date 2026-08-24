@@ -27,6 +27,7 @@ function Home() {
       <Gallery />
       <Testimonials />
       <Blog />
+      <About />
     </>
   )
 }
