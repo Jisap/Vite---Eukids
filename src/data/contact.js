@@ -18,7 +18,7 @@ export const contactCards = [
     label: "Find Us",
     primary: "55 Clark St, Brooklyn",
     secondary: "NY 11201, USA",
-    iconBg: "bg-secondary",
+    iconBg: "bg-primary",
   },
 ];
 
