@@ -134,10 +134,78 @@ const Contact = () => {
                         className="w-full p-5 border border-gray-200 rounded-2xl bg-body-bg text-heading-1 placeholder:text-body/50 text-sm outline-none focus:border-primary-2 transition-colors resize-none"
                       />
                     </div>
+
+                    <div className="flex flex-wrap items-center gap-4 pt-1">
+                      <button
+                        type="submit"
+                        className="bg-primary hover:bg-heading-1 text-heading-1 hover:text-white font-bold px-10 py-4 rounded-full transition-all duration-300 inline-flex items-center gap-2.5 cursor-pointer"
+                      >
+                        Send Message
+                        <Icon icon="solar:arrow-right-linear" className="text-lg" />
+                      </button>
+
+                      <p className="text-body text-xs">
+                        Response within <span className="font-bold text-heading-1">24 hours</span>
+                      </p>
+                    </div>
                   </div>
                 </form>
               </div>
             </div>
+
+            <aside className="lg:col-span-4 space-y-6">
+              <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-7">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-heading-1 shrink-0">
+                    <Icon icon="solar:clock-circle-bold" className="text-xl" />
+                  </div>
+
+                  <h4 className="font-bold text-heading-1 font-display">Working Hours</h4>
+                </div>
+
+                <ul className="space-y-0.5">
+                  {workingHours.map((row) => (
+                    <li key={row.day} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-none">
+                      <span className="text-sm text-body">{row.day}</span>
+
+                      <span className={`
+                        text-sm font-bold 
+                        ${row.closed
+                          ? "text-primary-7"
+                          : "text-heading-1"
+                        }`}
+                      >
+                        {row.hours}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-white shadow-[0_4px_30px_rgba(0,0,0,0.07)] rounded-3xl p-7">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-heading-1 shrink-0">
+                    <Icon icon="solar:share-bold" className="text-xl" />
+                  </div>
+
+                  <h4 className="font-bold text-heading-1 font-display">Follow Us</h4>
+                </div>
+
+                <div className="grid grid-cols-5 gap-2">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.icon}
+                      href="#"
+                      title={social.label}
+                      aria-label={social.label}
+                      className={`h-11 rounded-xl bg-body-bg text-body ${social.hoverBg} hover:text-white transition-all flex items-center justify-center text-xl border border-gray-200 hover:border-transparent`}
+                    >
+                      <Icon icon={social.icon} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
