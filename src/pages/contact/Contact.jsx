@@ -205,11 +205,38 @@ const Contact = () => {
                   ))}
                 </div>
               </div>
+
+              <div className="relative bg-heading-1 rounded-3xl p-7 overflow-hidden">
+                <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-primary/20 pointer-events-none" />
+                <div className="absolute -bottom-5 -left-5 w-24 h-24 rounded-full bg-primary/10 pointer-events-none" />
+
+                <Icon icon="solar:question-circle-bold" className="text-primary text-4xl mb-4 relative" />
+
+                <h4 className="font-extrabold text-white text-lg mb-2 relative font-display">Have a Question?</h4>
+
+                <p className="text-white/60 text-sm leading-6 mb-5 relative">
+                  Reach out any time — our team typically responds within one business day.
+                </p>
+              </div>
             </aside>
           </div>
         </div>
       </section>
 
+      <div className="container-base pb-16 md:pb-24">
+        <div className="rounded-3xl overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.10)]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3026.0937912088407!2d-73.99363492404754!3d40.69278367139466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a476dd10f9f%3A0xa1cb17b5c697fe10!2s55%20Clark%20St%2C%20Brooklyn%2C%20NY%2011201%2C%20USA!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+            width="100%"
+            height="420"
+            style={{ border: 0, display: "block" }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="EduKids Location — 55 Clark St, Brooklyn NY"
+          />
+        </div>
+      </div>
     </>
   )
 }
