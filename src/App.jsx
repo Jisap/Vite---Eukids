@@ -17,6 +17,7 @@ import Footer from './components/layout/Footer';
 import Footer2 from './components/layout/Footer2';
 import About from './pages/about/About';
 import Pricing from './pages/pricing/Pricing';
+import Contact from './pages/contact/Contact';
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="/blog/:id" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
