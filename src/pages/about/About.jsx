@@ -55,7 +55,12 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 lg:mb-14">
               {HIGHLIGHTS.map((item) => (
                 <div key={item} className="flex items-center gap-2">
-                  <Icon icon="material-symbols:check-rounded" width="24" className="text-primary-2 shrink-0" />
+                  <Icon
+                    icon="material-symbols:check-rounded"
+                    width="24"
+                    className="text-primary-2 shrink-0"
+                  />
+
                   <span>{item}</span>
                 </div>
               ))}
@@ -95,6 +100,16 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <div className="relative w-full">
+        <AboutSection />
+        <img src={element1} alt="" aria-hidden="true" className="absolute top-14 left-14 animate-float pointer-events-none hidden lg:block" />
+        <img src={element2} alt="" aria-hidden="true" className="absolute top-14 right-14 animate-slide pointer-events-none hidden lg:block" />
+        <img src={element3} alt="" aria-hidden="true" className="absolute bottom-14 left-14 animate-rotate pointer-events-none hidden lg:block" />
+      </div>
+
+      <Team />
+      <Gallery />
     </>
   )
 }

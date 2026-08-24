@@ -4,25 +4,25 @@ import { teachers } from "@data/teachers";
 import { staggerDelay } from "@utils/helpers";
 
 const Team = () => (
-    <>
-        <Breadcrumb title="Our Team" currentPage="Team" />
+  <>
+    <Breadcrumb title="Our Team" currentPage="Team" />
 
-        <section id="team" className="section-py relative">
-            <div className="container-base">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {teachers.map((teacher, index) => (
-                        <div
-                            key={teacher.id}
-                            data-aos="fade-up"
-                            data-aos-delay={staggerDelay(index, 100)}
-                        >
-                            <TeacherCard {...teacher} />
-                        </div>
-                    ))}
-                </div>
+    <section id="team" className="section-py relative">
+      <div className="container-base">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {teachers.map((teacher, index) => (
+            <div
+              key={teacher.id}
+              data-aos="fade-up"
+              data-aos-delay={staggerDelay(index, 100)}
+            >
+              <TeacherCard {...teacher} />
             </div>
-        </section>
-    </>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
 );
 
 export default Team;

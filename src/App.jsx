@@ -16,6 +16,7 @@ import Blog from './pages/blog/Blog';
 import Footer from './components/layout/Footer';
 import Footer2 from './components/layout/Footer2';
 import About from './pages/about/About';
+import Pricing from './pages/pricing/Pricing';
 
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetails />} />
             <Route path="/about" element={<About />} />
+            <Route path="/pricing" element={<Pricing />} />
           </Routes>
         </main>
         <Footer />
