@@ -17,12 +17,13 @@ const Pricing = () => {
             description="Simple, transparent pricing for every family — pick the plan that fits your child's learning journey."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-30">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-24 md:gap-8 mt-24 md:mt-30">
             {pricingPlans.map((plan, index) => (
               <div
                 key={plan.id}
                 data-aos="fade-up"
                 data-aos-delay={staggerDelay(index, 150)}
+                className="h-full"
               >
                 <PricingCard {...plan} />
               </div>

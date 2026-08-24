@@ -19,7 +19,7 @@ const PricingCard = ({
   bgColor,
   badgeBg = "bg-white"
 }) => (
-  <div className={`relative ${bgColor} text-white p-10 sm:p-12 pt-24 rounded-3xl`}>
+  <div className={`relative ${bgColor} text-white p-10 sm:p-12 pt-24 rounded-3xl h-full flex flex-col`}>
     <div className="absolute w-full -top-18 left-0 px-6">
       <div className={`${badgeBg} border-card max-w-70 mx-auto p-5 text-heading-1 rounded-2xl`}>
         <p className="text-2xl font-medium font-display">{planName}</p>
@@ -32,7 +32,7 @@ const PricingCard = ({
 
     <p className="mb-8 text-lg opacity-90">{description}</p>
 
-    <ul className="space-y-5 mb-12">
+    <ul className="space-y-5 mb-12 flex-1">
       {features.map((feature) => (
         <li
           key={feature.label}
@@ -44,7 +44,7 @@ const PricingCard = ({
       ))}
     </ul>
 
-    <Button text="Get Started" variant="white" className="w-full" />
+    <Button text="Get Started" variant="white" className="w-full mt-auto" />
   </div>
 );
 
